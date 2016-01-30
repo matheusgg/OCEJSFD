@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+	<title>ConvertDateTime</title>
+</h:head>
+<h:body>
+	<h:messages />
+
+	<h:form>
+		<h:panelGrid>
+			<h:panelGroup>
+				<h3>ConvertDateTime - Date Simple</h3>
+				<h:inputText>
+					<!-- Por padrao, o type de f:convertDateTime é "date" e o dateStyle tem o valor "default" como padrao, assim como timeStyle. -->
+					<!-- 
+						Os valores válidos para type sao:
+						- date (padrao)
+						- time
+						- both 
+					-->
+					<!-- 
+						Os valores válidos para dateStyle e timeStyle sao:
+						- default (padrao)
+						- short
+						- medium
+						- long
+						- full
+					-->
+					<f:convertDateTime />
+				</h:inputText>
+			</h:panelGroup>
+
+			<h:panelGroup>
+				<h3>ConvertDateTime - Date TimeZone</h3>
+				<h:inputText>
+					<!-- 
+						 O atributo timeZone pode receber uma instancia de TimeZone ou uma String que será passada para o método
+						 TimeZone.getTimeZone(String).
+					-->
+					<f:convertDateTime dateStyle="default" timeZone="America/Sao_Paulo" />
+				</h:inputText>
+			</h:panelGroup>
+
+			<h:panelGroup>
+				<h3>ConvertDateTime - Date Locale</h3>
+				<h:inputText>
+					<f:convertDateTime locale="en_US" dateStyle="short" />
+				</h:inputText>
+			</h:panelGroup>
+
+			<h:panelGroup>
+				<h3>ConvertDateTime - Date Pattern</h3>
+				<h:inputText>
+					<!-- 
+						Assim como ocorre em f:converNumber, em f:convertDateTime quando o type e o pattern sao informados, o pattern
+						tem preferencia, mesmo quando diverge do type.
+					-->
+					<f:convertDateTime type="time" pattern="dd/MM/yyyy" locale="en_US" />
+				</h:inputText>
+			</h:panelGroup>
+
+			<h:panelGroup>
+				<h3>ConvertDateTime - Time</h3>
+				<h:inputText>
+					<f:convertDateTime type="time" />
+				</h:inputText>
+			</h:panelGroup>
+
+			<h:panelGroup>
+				<h3>ConvertDateTime - Both</h3>
+				<h:inputText>
+					<f:convertDateTime type="both" />
+				</h:inputText>
+			</h:panelGroup>
+
+			<h:commandButton value="OK" />
+		</h:panelGrid>
+	</h:form>
+</h:body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<f:metadata>
+	<f:viewParam name="itemID" value="#{bookmarkabilityMB.itemID}" />
+
+	<!-- Caso uma requisicao GET seja feita e um parametro de visualizacao que não possui valor associado a nenhum ManagedBean (nao possui value) seja informado, 
+		ele será adicionado ao mapa de atributos do escopo de requisicao. -->
+	<f:viewParam name="teste" />
+</f:metadata>
+
+<h:head>
+	<title>Page 2</title>
+</h:head>
+<h:body>
+	<h1>Page 2</h1>
+	#{param}
+	
+	<hr />
+	#{requestScope}
+</h:body>
+</html>

@@ -1,0 +1,20 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:cc="http://java.sun.com/jsf/composite">
+
+	<cc:interface>
+		<cc:facet name="header" required="false" />
+		<cc:facet name="footer" required="false" />
+	</cc:interface>
+
+	<cc:implementation>
+		<cc:renderFacet name="header" />
+
+		<!-- A tag cc:insertChildren permite especificar que todo o conteudo inserido dentro da utilizacao deste componente composto, que nao sejam facets, 
+			 será inserido neste ponto. 
+		-->
+		<cc:insertChildren />
+
+		<cc:renderFacet name="footer" />
+	</cc:implementation>
+
+</ui:composition>

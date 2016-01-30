@@ -1,0 +1,15 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:cc="http://java.sun.com/jsf/composite">
+
+	<cc:interface>
+		<!-- É possivel associar um ResourceBundle a um componente composto apenas criando dentro do mesmo diretorio do componente um arquivo
+			 .properties com o mesmo nome do componente composto. Para utilizar este ResourceBundle dentro do componente, basta acessar o mapa
+			 retornado pela propriedade resourceBundleMap. -->
+		<cc:attribute name="customAdvertisement" default="#{cc.resourceBundleMap['advertisement.default']}" />
+	</cc:interface>
+
+	<cc:implementation>
+		<h3>#{cc.attrs.customAdvertisement}</h3>
+	</cc:implementation>
+
+</ui:composition>

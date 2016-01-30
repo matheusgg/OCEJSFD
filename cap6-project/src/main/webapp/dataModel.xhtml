@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<title>DataModel</title>
+
+	<style type="text/css">
+.even {
+	background-color: #708090;
+}
+
+.odd {
+	background-color: #B0C4DE;
+}
+
+.even-row {
+	background-color: #ADFF2F;
+}
+
+.odd-row {
+	background-color: #9ACD32;
+}
+</style>
+
+</h:head>
+<h:body>
+
+	<!-- Ordenando pelo primeiro ou ultimo nome -->
+	<h:form>
+		<h3>Ordenacao</h3>
+		<h:dataTable value="#{dataModelMB.sortDataModel}" var="nome" cellpadding="20" rowClasses="odd, even-row" headerClass="even">
+			<h:column>
+				<f:facet name="header">
+					<h:commandLink action="#{dataModelMB.sortBy('first')}" value="SortBy First" />
+				</f:facet>
+				<h:outputText value="#{nome.first}" />
+			</h:column>
+
+			<h:column>
+				<f:facet name="header">
+					<h:commandLink action="#{dataModelMB.sortBy('last')}" value="SortBy Last" />
+				</f:facet>
+				<h:outputText value="#{nome.last}" />
+			</h:column>
+		</h:dataTable>
+	</h:form>
+
+	<!-- Excluindo linhas atraves do DataModel -->
+	<h:form>
+		<h3>Excluindo Linhas</h3>
+		<h:dataTable value="#{dataModelMB.listDataModel}" var="item" cellpadding="20" rowClasses="odd, even-row">
+			<h:column>
+				#{item.first}
+			</h:column>
+
+			<h:column>
+				#{item.last}
+			</h:column>
+
+			<h:column>
+				<h:commandLink action="#{dataModelMB.removeItem()}" value="Remover" />
+			</h:column>
+		</h:dataTable>
+	</h:form>
+	<hr />
+
+	<!-- Exibindo o numero da linha com ArrayDataModel -->
+	<ui:remove>
+		<h3>Numeros de Linhas</h3>
+		<h:dataTable value="#{dataModelMB.arrayDataModel}" var="item" cellpadding="20" rowClasses="odd, even-row">
+			<h:column>
+				<!-- Como a dataTable atualiza o indice a cada iteracao, é possivel recuperar o numero da linha corrente 
+				 atraves da referencia do DataModel -->
+			#{dataModelMB.arrayDataModel.rowIndex + 1}
+		</h:column>
+
+			<h:column>
+			#{item.first}
+		</h:column>
+
+			<h:column>
+			#{item.last}
+		</h:column>
+		</h:dataTable>
+	</ui:remove>
+
+</h:body>
+</html>

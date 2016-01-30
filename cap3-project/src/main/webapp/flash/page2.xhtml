@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<title>Page 2</title>
+</h:head>
+<h:body>
+	<h1>Page 2</h1>
+
+	<h3>Mapa Flash</h3>
+
+	<!-- A utilizacao do atributo keep do objeto flash, faz com que este atributo (attr1) seja recuperado e automaticamente
+		adicionado novamente ao mapa de flash para se tornar disponivel na proxima requisicao. -->
+	#{flash.keep.attr1}
+	<hr />
+
+	<!-- Este atributo foi adicionado no mapa de atributos de requisicao (RequestScope), porém foi promovido ao escopo de flash
+		atraves do metodo keep. Deste modo, este atributo teste foi removido do escopo de requisicao e adicionado ao escopo de flash -->
+	#{flash.teste}
+	<hr />
+
+	<!-- Este atributo teste1 foi adicionado no escopo de requisicao, com keep ele sera promovido ao escopo de flash. Porem, a primeira
+		vez que esta pagina for exibida, essa expressao nao exibira o valor do atributo teste1, pois ele apenas sera adicionado
+		ao escopo de flash, somente a partir da segunda requisicao que este valor sera exibido, pois neste momento, ele ja estara
+		no mapa do escopo de flash. Este comportamento so funcionara caso nao seja feito um redirecionamento fisico (faces-redirect), pois
+		caso um redirecionamento seja feito, este atributo nao estara mais disponivel no escopo de requisicao, sendo assim, nao existira
+		valor a ser adicionado no escopo de flash. -->
+	#{flash.keep.teste1}
+</h:body>
+</html>

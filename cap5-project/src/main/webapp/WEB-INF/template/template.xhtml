@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+	<title><ui:insert name="title">Composition</ui:insert></title>
+</h:head>
+<h:body>
+
+	<div align="center">
+		<ui:insert name="header">
+			<!-- ui:include serve para incluir outro documento xhtml em um determinado ponto. -->
+			<ui:include src="header.xhtml" />
+		</ui:insert>
+	</div>
+
+	<div align="center">
+
+		<!-- A tag ui:insert indica que este ponto é variavel, ou seja, pode ser definido conteudo nesta secao atraves da tag ui:define.
+			Caso nenhum conteudo seja especificado, o que estiver dentro da tag ui:insert será renderizado, ou seja, o conteudo padrao. -->
+		<ui:insert name="content">
+			<h1>Conteúdo</h1>
+		</ui:insert>
+	</div>
+
+	<div align="center" style="position: absolute; bottom: 0; width: 99%">
+		<ui:insert name="footer">
+			<ui:include src="footer.xhtml" />
+		</ui:insert>
+	</div>
+</h:body>
+</html>

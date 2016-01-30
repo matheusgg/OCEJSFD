@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<title>Page 1</title>
+</h:head>
+<h:body>
+	<h1>Page 1</h1>
+
+	<!-- É possível realizar um redirecionamento fisico entre paginas. Por padrao, quando um outcome é encontrando, 
+		o handler de navegacao envia a pagina representada pelo ID de visualizacao do outcome informado, porém
+		isso nao atualiza a URL da página no browser. É possível realizar um redirecionamento fisico para atualizar a URL exibida
+		no browser. Para isso, basta informar o parametro "faces-redirect=true" no outcome caso nao se utilize regras de navegacao.
+		Deste modo, o JSF enviara o codigo de resposta 302 de redirecionamento junto com a URL que deve ser solicitada, assim o browser
+		realizara uma segunda requisicao (desta vez uma requisicao GET) para a URL informada, atualizando assim o endereco do browser. -->
+	<h:form>
+		<h:panelGrid>
+			<h:commandButton action="page2?faces-redirect=true" value="Redireciona para a Pagina 2" />
+
+			<!-- O parametro de URL faces-redirect deve ser inserido junto com o outcome, este exemplo abaixo nao realizara um redirecionamento.
+				Ao inves disso, passará um parametro de requisicao faces-redirect para a pagina seguinte. -->
+			<!-- 		<h:commandButton action="page2" value="Redireciona para a Pagina 2"> -->
+			<!-- 			<f:param name="faces-redirect" value="true" /> -->
+			<!-- 		</h:commandButton> -->
+
+			<h:commandButton action="testRedirect" value="Redireciona para a Pagina 2 utilizando regras de navegacao" />
+		</h:panelGrid>
+	</h:form>
+</h:body>
+</html>

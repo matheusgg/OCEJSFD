@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+	<title>Custom Validator</title>
+</h:head>
+<h:body>
+	<h:messages showDetail="true" />
+
+	<h:form>
+		<h:panelGrid>
+			<!-- Caso o atributo validatorMessage seja especificado, ele sempre tera precedencia sobre a mensagem especificada no validador personalizado. -->
+			<!-- Caso sejam especificados mais de um validador para o mesmo componente, todos serao chamados, mesmo se algum lancar uma excecao de validacao,
+				os outros validadores registrados ainda serao executados. -->
+			<h:inputText value="#{customValidatorMB.name}" validator="customvalidator.LengthValidator">
+				<f:attribute name="customvalidator.LengthValidator_length" value="5" />
+
+				<!-- Adicionando um validador registrado atraves do faces-config. -->
+				<!-- Diferentemente dos conversores, é possível adicionar validadores do mesmo tipo (classe) em um mesmo componente. -->
+				<f:validator validatorId="customvalidator.LengthValidator2" />
+			</h:inputText>
+
+			<!-- Diferentemente do atributo converter, o atributo validator aceita o ID do validador ou uma referencia de método que contenha a mesma
+				assinatura do método validate da interface javax.faces.validator.Validator, ou seja,  public void validate(FacesContext, UIComponent,
+				Object) throws ValidatorException. -->
+			<!-- Caso seja especificada uma expressao de método no atributo validate, este método só será invocado caso o valor informado no componente
+				seja diferente de null, evitando assim, excecoes do tipo NullPointerException. -->
+			<h:inputText validator="#{customValidatorMB.validateTest}" />
+
+			<h:commandButton value="OK" />
+		</h:panelGrid>
+	</h:form>
+</h:body>
+</html>

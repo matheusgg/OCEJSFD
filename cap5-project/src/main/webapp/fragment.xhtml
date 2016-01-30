@@ -1,0 +1,19 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:cft="http://customFaceletsTags.com.br">
+
+<h:head>
+	<title>Fragment</title>
+</h:head>
+<h:body>
+
+	<h3>#{component.findComponent('frag')}</h3>
+
+	<!-- Analoga a ui:decorate, a tag ui:fragment nao ignora o conteudo fora de seu corpo, porem diferentemente de
+		 ui:decorate, ui:fragment cria um novo componente na arvore de visualizacao. -->
+	<ui:fragment id="frag" rendered="true">
+		<h1>Teste Fragment</h1>
+	</ui:fragment>
+
+</h:body>
+</html>

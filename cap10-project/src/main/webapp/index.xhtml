@@ -1,0 +1,209 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<title>Ajax</title>
+
+	<!-- É possivel utilizar a biblioteca JavaScript do JSF diretamente sem o uso da tag f:ajax.
+		 Para isso, basta importar o arquivo jsf.js que contem as funcoes JavaScript do JSF 2.0 -->
+	<!-- 	<h:outputScript name="jsf.js" library="javax.faces" /> -->
+</h:head>
+<h:body>
+	<h3>f:ajax</h3>
+	<h:form id="mainForm">
+		<h:panelGrid columns="2">
+			<h:outputText value="Digite seu nome:" />
+			<h:inputText value="#{viewScope['nome']}">
+
+				<!-- A aplicacao do @this é implicita, desta forma, nao é necessario especifica-lo -->
+				<!-- Quando o atributo render nao e especificado, o valor padrao é @none -->
+				<f:ajax event="keyup" render=":mainForm:echo" />
+
+			</h:inputText>
+
+			<h:outputText value="Olá" />
+			<h:outputText value="#{viewScope['nome']}" id="echo" />
+		</h:panelGrid>
+	</h:form>
+
+	<h3>f:ajax - action / valueChange</h3>
+	<h:form>
+		<h:messages />
+
+		<!-- Alem dos eventos DOM do JavaScript, é possivel especificar os eventos action e valueChange.
+			 Esses dois eventos se comportam respectivamente como os eventos JavaScript onclick e onblur. -->
+
+		<h:panelGrid>
+			<h:inputText value="#{viewScope['nome']}">
+				<f:ajax event="valueChange" render="@form" />
+			</h:inputText>
+
+			<h:outputText value="#{viewScope['nome']}" />
+
+			<h:commandButton action="#{ajaxMB.show(false)}" value="OK">
+				<f:ajax event="action" render="@form" />
+			</h:commandButton>
+		</h:panelGrid>
+	</h:form>
+
+	<h3>f:ajax - onerror / onevent</h3>
+	<h:form>
+		<h:messages />
+
+		<h:commandButton action="#{ajaxMB.show(true)}" value="OK">
+
+			<!-- A funcao especificada em onevent é chamada 3 vezes, ou seja, quando a requisicao ajax comeca (begin),
+				 quando a resposta é retornada pelo servidor (complete) e antes dos componentes especificados em render
+				 serem renderizados (success). A terceira chamada nao ocorrera caso aconteca algum erro durante o processamento
+				 da requisicao ajax no servidor, neste caso, a funcao especificada em onerror sera chamada. -->
+			<f:ajax event="action" render="@form" onerror="errorTest" onevent="eventTest" />
+		</h:commandButton>
+	</h:form>
+
+	<h3>f:ajax - listener (Command Component)</h3>
+	<h:form>
+		<h:panelGrid>
+			<h:messages />
+
+			<!-- Em uma requisicao ajax, o metodo especificado em listener sempre sera o primeiro a ser invocado. Mesmo
+			 antes do metodo declarado em actionListener -->
+			<h:commandButton action="#{ajaxMB.show(false)}" actionListener="#{ajaxMB.beforeAction}" value="OK">
+				<f:ajax event="action" render="@form" listener="#{ajaxMB.ajaxAction}" />
+			</h:commandButton>
+
+			<!-- Caso o atributo immediate seja especificado em um componente que possua o compoetamento ajax, a ordem de invocacao
+			 os metodos sera a mesma, ou seja, primeiro listener, depois actionListener e por fim, action. A unica diferenca é 
+			 que esses metodos serao chamados no final da fase APPLY_REQUEST_VALUES. -->
+			<h:commandButton action="#{ajaxMB.show(false)}" actionListener="#{ajaxMB.beforeAction}" value="Immediate no Componente" immediate="true">
+				<f:ajax event="action" render="@form" listener="#{ajaxMB.ajaxAction}" />
+			</h:commandButton>
+
+			<!-- Caso o atributo immediate seja especificado na tag f:ajax, a ordem de invocacao
+			 os metodos sera a mesma, ou seja, primeiro listener, depois actionListener e por fim, 
+			 action. A unica diferenca é o metodo definido em listener sera chamado no final da fase APPLY_REQUEST_VALUES. -->
+			<h:commandButton action="#{ajaxMB.show(false)}" actionListener="#{ajaxMB.beforeAction}" value="Immediate no Ajax">
+				<f:ajax event="action" render="@form" listener="#{ajaxMB.ajaxAction}" immediate="true" />
+			</h:commandButton>
+		</h:panelGrid>
+	</h:form>
+
+	<h3>f:ajax - listener (Select Component)</h3>
+	<h:form>
+		<h:panelGrid>
+			<h:messages />
+
+			<!-- Em uma requisicao ajax, o metodo especificado em valueChangeListener sera chamado primeiro que o metodo definido em
+				 listener, pois valueChangeListener é processado na fase PROCCESS_VALIDATIONS, ja listener é processado apenas em
+				 INVOKE_APPLICATION. -->
+			<h:selectOneMenu valueChangeListener="#{ajaxMB.beforeChange}">
+				<f:selectItem itemLabel="Item 1" itemValue="1" />
+				<f:selectItem itemLabel="Item 2" itemValue="2" />
+				<f:ajax event="valueChange" render="@form" listener="#{ajaxMB.ajaxAction}" />
+			</h:selectOneMenu>
+
+			<!-- Caso o atributo immediate seja especificado no componente, todos os metodos serao invocados na fase APPLY_REQUEST_VALUES,
+				 porem o metodo definido em valueChangeListener sera chamado antes do metodo definido em listener. -->
+			<h:selectOneMenu valueChangeListener="#{ajaxMB.beforeChange}" immediate="true">
+				<f:selectItem itemLabel="Item 1" itemValue="1" />
+				<f:selectItem itemLabel="Item 2" itemValue="2" />
+				<f:ajax event="valueChange" render="@form" listener="#{ajaxMB.ajaxAction}" />
+			</h:selectOneMenu>
+
+			<!-- Caso immediate seja definido na tag f:ajax, o metodo de listener sera chamado na fase APPLY_REQUEST_VALUES, ou seja,
+				 antes do metodo definido em valueChangeListener. -->
+			<h:selectOneMenu valueChangeListener="#{ajaxMB.beforeChange}">
+				<f:selectItem itemLabel="Item 1" itemValue="1" />
+				<f:selectItem itemLabel="Item 2" itemValue="2" />
+				<f:ajax event="valueChange" render="@form" listener="#{ajaxMB.ajaxAction}" immediate="true" />
+			</h:selectOneMenu>
+		</h:panelGrid>
+	</h:form>
+
+	<h3>f:ajax - eventos padroes</h3>
+	<h:form>
+
+		<!-- É possivel inverter a estrutura de declaracao e atribuir comportamentos ajax para um conjunto de componentes.
+			 Para isso, basta especificar esses componentes dentro da tag f:ajax. -->
+
+		<!-- Caso o atributo event nao seja especificado, é assumido o evento padrao de cada componente. Porem, se o atributo
+			 event for especificado e possuir um evento que nao seja suportado por algum componente do grupo, o JSF nao aplicara
+			 o comportamento ajax para este componente, pois o mesmo nao suportara o evento especificado. -->
+
+		<!-- O evento padrao dos componentes de comando, links e botoes é o action. Ja o evento padrao dos componentes de texto,
+			 select, etc. é o valueChange. -->
+		<f:ajax render="@form" event="click" listener="#{ajaxMB.ajaxAction}">
+			<h:messages />
+
+			<h:inputText value="#{viewScope['nome']}">
+				<!-- É possivel declarar comportamentos ajax aninhados, neste caso, o JSF disparara uma requisicao ajax quando o 
+					 usuario clicar neste campo de texto e quando o usuario alterar o valor do mesmo. -->
+
+				<!-- No caso de comportamentos ajax aninhados, caso o evento declarado seja o mesmo, a tag f:ajax mais especifica 
+					 tera preferencia. -->
+				<f:ajax event="change" render="@form" />
+			</h:inputText>
+
+			<h:outputText value="#{viewScope['nome']}" />
+
+			<h:commandButton action="#{ajaxMB.show(false)}" value="OK" />
+		</f:ajax>
+	</h:form>
+
+
+	<h3>f:ajax - Namespaces</h3>
+	<h:form>
+		<h:commandButton action="#{ajaxMB.show(false)}" value="OK">
+			<!-- Utilizacao da funcao progress que possui o namespace br.com.ajax -->
+			<f:ajax onevent="br.com.ajax.progress" />
+		</h:commandButton>
+	</h:form>
+
+	<h3>API JavaScript do JSF</h3>
+	<h:form>
+		<h:messages />
+
+		<h:panelGrid>
+			<h:inputText value="#{viewScope['nome']}" onblur="jsf.ajax.request(this, event, {execute: '@this', render: '@form'});" />
+
+			<h:outputText value="#{viewScope['nome']}" />
+
+			<h:commandButton action="#{ajaxMB.show(false)}" value="OK" id="btn"
+				onclick="jsf.ajax.request(this, event, {execute: '@this', render: '@form'}); return false;" />
+		</h:panelGrid>
+	</h:form>
+
+
+	<script type="text/javascript">
+		function eventTest(data){
+			alert(data.status);
+		}
+
+		function errorTest(data){
+			alert(data.errorMessage);
+		}
+
+		/*
+		 * A criacao de namespaces para funcoes dificulta a sobrescrita das mesmas.
+		 */ 
+		if(!br) var br = {}
+
+		if(!br.com) br.com = {}
+
+		if(!br.com.ajax) br.com.ajax = {
+				progress: function(data){
+					alert(data.status);
+				}
+		}
+
+		/*
+		 * Interceptando requisicoes ajax.
+		 */
+		var originalAjaxRequestFunction = jsf.ajax.request;
+		jsf.ajax.request = function(source, event, options){
+			alert("Starting Ajax Request...");
+			originalAjaxRequestFunction(source, event, options);
+			alert("End Ajax Request...");
+		}
+	</script>
+</h:body>
+</html>

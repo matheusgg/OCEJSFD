@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+	<title>ConvertDateTime</title>
+</h:head>
+<h:body>
+	<h:messages />
+
+	<h:form>
+		<h:panelGrid>
+			<h:panelGroup>
+				<h3>ConvertNumber - Currency</h3>
+				<h:inputText label="Preço">
+					<!-- 
+						 O type do conversor padrao f:convertNumber é inicialmente number, porém os tipos currency e percent também podem ser
+						 especificados. 
+					-->
+					<!-- 
+						 O aributo groupingUsed serve para especificar se a perte interira do valor deve ser agrupada com separadores ponto (.).
+						 Por padrao é true. 
+					-->
+					<!-- 
+						 O atributo minFractionDigits serve para informar a quantidade minima de digitos após a virgula, caso o usuário
+						 informe um valor inferior a esta quantidade, o conversor adicionara zeros (0) ao valor formatado até completar
+						 a quantidade minima. Já o atributo maxFractionDigits realiza a operacao contraria, caso o usuário informe um
+						 valor com a quantidade de digitos apos a virgula maior do que a quantidade especificada neste atributo, os 
+						 valores excedentes serao utilizados para arredondamento. Os atributos minIntegerDigits e maxIntegerDigits são 
+						 análogos aos minFractionDigits e maxFractionDigits, porém eles se aplicam a parte inteira do valor.
+					-->
+					<!-- 
+						 Por padrao, quando o tipo é currency, o valor de minFractionDigits e maxFractionDigits é 2. 
+					-->
+					<!-- 
+						 O atributo currencyCode serve para especificar o código ISO 4217 da moeda, deste modo, o conversor adicionará o
+						 simbolo da moeda correspondente ao codigo informado.
+					 -->
+					<!-- 
+					 	 O atributo integerOnly especifica se somente a parte inteira do valor deve ser formatada e validada. Caso seja true,
+					 	 todos os valores especificados após a virgula serao ignorados e o valor sera formatado com zeros (0) de acordo com
+					 	 a quantidade informada em minFractionDigits. Ex.: R$ 638765837456,485743 (após a conversao) -> R$ 837.456,00.
+					-->
+					<!-- 
+						O atributo locale pode receber uma expressao que resulte em uma instancia de java.util.Locale, ou uma String
+						que representa a localizacao e que será passada para o construtor de java.util.Locale(String, String) como
+						primeiro argumento, o segundo argumento será uma String vazia.
+					-->
+					<f:convertNumber type="currency" minFractionDigits="2" maxFractionDigits="2" minIntegerDigits="2" maxIntegerDigits="6"
+						groupingUsed="true" locale="pt_BR" integerOnly="true" />
+				</h:inputText>
+			</h:panelGroup>
+
+			<h:panelGroup>
+				<h3>ConvertNumber - Percent</h3>
+				<h:inputText>
+					<f:convertNumber type="percent" minIntegerDigits="2" maxFractionDigits="3" minFractionDigits="2" maxIntegerDigits="6"
+						groupingUsed="false" />
+				</h:inputText>
+			</h:panelGroup>
+
+			<!-- 
+				 No conversor f:convertNumber, é obrigatório especificar o type ou o pattern. Caso os dois sejam especificados,
+				 o pattern tem precendencia e o type é ignorado. Quando o pattern é especificado, ele se comporta como um
+				 conversor monetário.
+			-->
+			<!-- 
+				Number Format Pattern Syntax
+				
+				0	A digit - always displayed, even if number has less digits (then 0 is displayed)
+				#	A digit, leading zeroes are omitted.
+				.	Marks decimal separator
+				,	Marks grouping separator (e.g. thousand separator)
+				E	Marks separation of mantissa and exponent for exponential formats.
+				;	Separates formats
+				-	Marks the negative number prefix
+				%	Multiplies by 100 and shows number as percentage
+				?	Multiplies by 1000 and shows number as per mille
+				¤	Currency sign - replaced by the currency sign for the Locale. Also makes formatting use the 
+					monetary decimal separator instead of normal decimal separator. ¤¤ makes formatting use international monetary symbols.
+				X	Marks a character to be used in number prefix or suffix
+				'	Marks a quote around special characters in prefix or suffix of formatted number.
+			-->
+			<!-- 
+				Exemplos de padroes de formatacao monetaria:
+
+				Pattern		Number		Formatted String
+				###.###		123.456		123.456
+				###.#		123.456		123.5
+				###,###.##	123456.789	123,456.79
+				000.###		9.95		009.95
+				##0.###		0.95		0.95
+			-->
+			<h:panelGroup>
+				<h3>Convert Number - Number</h3>
+				<h:inputText>
+					<!-- O type será ignorado, pois um pattern foi informado. Este conversor se comportara como um conversor monetario -->
+					<f:convertNumber type="percent" pattern="¤ ###,###.##" />
+				</h:inputText>
+			</h:panelGroup>
+
+			<h:commandButton value="OK" />
+		</h:panelGrid>
+	</h:form>
+</h:body>
+</html>

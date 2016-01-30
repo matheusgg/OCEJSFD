@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+	<title>MessageBundle</title>
+</h:head>
+<h:body>
+	<!-- Além da especificacao do arquivo de mensagens no faces-config, é possível utilizar o componente loadBundle 
+		para especializar as mensagens para um determinado arquivo xhtml. A variavel especificada neste componente
+		é colocada no escopo de requisicao (requestScope) -->
+	<f:loadBundle basename="messages.messages" var="msg2" />
+
+	<h1>MessageBundle</h1>
+
+	<p>#{msg['msg.teste']}</p>
+	<p>#{msg2['msg.teste']}</p>
+	<p>
+		<!-- Com o componente outputFormat é possível formatar mensagens com placeholders -->
+		<h:outputFormat value="#{msg['msg.valor']}">
+			<f:param value="#{messagesMB.valor}" />
+		</h:outputFormat>
+	</p>
+	<p>
+		<!-- OutputFormat utiliza a classe MessageFormat para formatar mensagens com placeholders -->
+		<h:outputFormat value="#{msg['msg.pontos']}">
+			<f:param value="#{messagesMB.convertePonto(0)}" />
+		</h:outputFormat>
+	</p>
+</h:body>
+</html>

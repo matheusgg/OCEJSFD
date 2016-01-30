@@ -1,0 +1,66 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:cc="http://java.sun.com/jsf/composite">
+
+	<cc:interface>
+		<cc:attribute name="formId" default="mainForm" type="java.lang.String" />
+
+		<cc:attribute name="usenameText" default="Username" type="java.lang.String" />
+		<cc:attribute name="passwordText" default="Password" type="java.lang.String" />
+
+		<cc:attribute name="usernameValue" required="true" />
+		<cc:attribute name="passwordValue" required="true" />
+
+		<cc:attribute name="action" required="true" method-signature="java.lang.String action()" />
+		<cc:attribute name="actionBtnText" type="java.lang.String" default="OK" />
+
+		<!-- 
+			 É possivel expor os componentes de acao e de valores que estao dentro da secao de implementacao. Para isso,
+			 basta declarar as tags cc:valueHolder, cc:editableValueHolder ou cc:actionSource referenciando os componentes
+			 que serao expostos. O atributo name, é o nome que podera ser utilizado pelo atributo for dos conversores e
+			 validadores, o atributo targets é uma lista separada por espacos em branco de ids dos componentes que deverao
+			 ser expostos. 
+		-->
+		<!-- 
+			 Os ids referenciados em targets sao relativos ao componente top level da secao de implementacao, por este motivo,
+			 neste exemplo, o id do formulario foi anexado antes dos ids dos componentes que serao expostos, pois o formulario
+			 é o componente top level da secao de implementacao.
+		-->
+		<cc:valueHolder name="outputUsername" targets="#{cc.attrs.formId}:userText" />
+		<cc:valueHolder name="outputPassword" targets="#{cc.attrs.formId}:passText" />
+
+		<cc:editableValueHolder name="usernameInput" targets="#{cc.attrs.formId}:user" />
+
+		<!-- 
+			 O atributo targets é opcional. Quando ele é omitido, o id do componente que sera exposto deve ser definido no atributo name.
+			 Desta forma, o atributo name realiza duas funcoes, expoe o componente que possui o id especificado, e cria um alias para este
+			 componentes ser referenciado no atributo for dos validadores e conversores. 
+		-->
+		<!-- 
+			Porem existem dois problemas quando o id do componente que sera exposto é especificado no atributo name:
+			
+			- Expressoes para referenciar outros atributos nao sao avaliadas, deste modo, nao é possivel utilizar 
+			  a expressao #{cc.attrs.formId} assim como no atributo targets.
+			  
+			- Só é possivel especificar um id por vez, diferentemente do atributo targets, que permite especificar varios ids
+			  separados por espacos em branco.
+		-->
+		<cc:editableValueHolder name="mainForm:pass" />
+
+		<cc:actionSource name="actionBtn" targets="#{cc.attrs.formId}:btn" />
+	</cc:interface>
+
+	<cc:implementation>
+		<h:form prependId="false" id="#{cc.attrs.formId}">
+			<h:panelGrid columns="2">
+				<h:outputText value="#{cc.attrs.usenameText}" id="userText" />
+				<h:inputText value="#{cc.attrs.usernameValue}" id="user" />
+
+				<h:outputText value="#{cc.attrs.passwordText}" id="passText" />
+				<h:inputSecret value="#{cc.attrs.passwordValue}" id="pass" />
+
+				<h:commandButton action="#{cc.attrs.action}" value="#{cc.attrs.actionBtnText}" id="btn" />
+			</h:panelGrid>
+		</h:form>
+	</cc:implementation>
+
+</ui:composition>

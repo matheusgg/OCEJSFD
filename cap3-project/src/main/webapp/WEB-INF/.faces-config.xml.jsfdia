@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS model-entity="JSFProcess">
+ <PROCESS-ITEM NAME="rules:#navegacaoPorXML#page1.xhtml"
+  PATH="/navegacaoPorXML/page1.xhtml" SHAPE="32,17,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#navegacaoPorXML#page1.xhtml:0" NAME="item"
+   PATH="/navegacaoPorXML/page1.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="page2::#navegacaoPorXML#page2.xhtml"
+    NAME="output" PATH="/navegacaoPorXML/page2.xhtml"
+    TARGET="rules:#navegacaoPorXML#page2.xhtml" TITLE="page2" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+  <PROCESS-ITEM ID="rules:#navegacaoPorXML#page1.xhtml:1" NAME="item1"
+   PATH="/navegacaoPorXML/page1.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="sucesso::#navegacaoPorXML#page2.xhtml"
+    NAME="output" PATH="/navegacaoPorXML/page2.xhtml"
+    TARGET="rules:#navegacaoPorXML#page2.xhtml" TITLE="sucesso" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="falha::#navegacaoPorXML#page3.xhtml"
+    NAME="output1" PATH="/navegacaoPorXML/page3.xhtml"
+    TARGET="rules:#navegacaoPorXML#page3.xhtml" TITLE="falha" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#navegacaoPorXML#page2.xhtml"
+  PATH="/navegacaoPorXML/page2.xhtml" SHAPE="240,33,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:" SHAPE="32,129,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::0" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="logout::#navegacaoPorXML#page3.xhtml"
+    NAME="output" PATH="/navegacaoPorXML/page3.xhtml"
+    TARGET="rules:#navegacaoPorXML#page3.xhtml" TITLE="logout" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#navegacaoPorXML#page3.xhtml"
+  PATH="/navegacaoPorXML/page3.xhtml" SHAPE="240,145,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#redirecionamento#page1.xhtml"
+  PATH="/redirecionamento/page1.xhtml" SHAPE="32,305,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#redirecionamento#page1.xhtml:0" NAME="item"
+   PATH="/redirecionamento/page1.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="testRedirect::#redirecionamento#page2.xhtml"
+    NAME="output" PATH="/redirecionamento/page2.xhtml"
+    TARGET="rules:#redirecionamento#page2.xhtml" TITLE="testRedirect" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#redirecionamento#page2.xhtml"
+  PATH="/redirecionamento/page2.xhtml" SHAPE="240,321,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#bookmarkability#page1.xhtml"
+  PATH="/bookmarkability/page1.xhtml" SHAPE="32,417,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#bookmarkability#page1.xhtml:0" NAME="item"
+   PATH="/bookmarkability/page1.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="teste1::#bookmarkability#page2.xhtml"
+    NAME="output" PATH="/bookmarkability/page2.xhtml"
+    TARGET="rules:#bookmarkability#page2.xhtml" TITLE="teste1" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="teste2::#bookmarkability#page2.xhtml"
+    NAME="output1" PATH="/bookmarkability/page2.xhtml"
+    TARGET="rules:#bookmarkability#page2.xhtml" TITLE="teste2" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#bookmarkability#page2.xhtml"
+  PATH="/bookmarkability/page2.xhtml" SHAPE="240,433,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#navegacaoPorXML#navegacaoAvancada2.xhtml"
+  PATH="/navegacaoPorXML/navegacaoAvancada2.xhtml" SHAPE="240,689,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#navegacaoPorXML#teste#*"
+  PATH="/navegacaoPorXML/teste/*" SHAPE="32,785,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#navegacaoPorXML#teste#*:0" NAME="item"
+   PATH="/navegacaoPorXML/teste/*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="avancada1::#navegacaoPorXML#navegacaoAvancada1.xhtml"
+    NAME="output" PATH="/navegacaoPorXML/navegacaoAvancada1.xhtml"
+    TARGET="rules:#navegacaoPorXML#navegacaoAvancada1.xhtml"
+    TITLE="avancada1" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#navegacaoPorXML#navegacaoAvancada1.xhtml"
+  PATH="/navegacaoPorXML/navegacaoAvancada1.xhtml" SHAPE="240,913,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#navegacaoPorXML#*" PATH="/navegacaoPorXML/*"
+  SHAPE="32,785,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#navegacaoPorXML#*:0" NAME="item"
+   PATH="/navegacaoPorXML/*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="avancada1::#navegacaoPorXML#navegacaoAvancada2.xhtml"
+    NAME="output" PATH="/navegacaoPorXML/navegacaoAvancada2.xhtml"
+    TARGET="rules:#navegacaoPorXML#navegacaoAvancada2.xhtml"
+    TITLE="avancada1" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#navegacaoPorXML#*:1"
+  PATH="/navegacaoPorXML/*" SHAPE="32,561,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#navegacaoPorXML#*:1" NAME="item"
+   PATH="/navegacaoPorXML/*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID=":#{navegacaoMB.testAction1()}:#navegacaoPorXML#page1.xhtml"
+    NAME="output" PATH="/navegacaoPorXML/page1.xhtml"
+    TARGET="rules:#navegacaoPorXML#page1.xhtml"
+    TITLE="#{navegacaoMB.testAction1()}:[any]" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID=":#{navegacaoMB.testAction2()}:#navegacaoPorXML#page2.xhtml"
+    NAME="output1" PATH="/navegacaoPorXML/page2.xhtml"
+    TARGET="rules:#navegacaoPorXML#page2.xhtml"
+    TITLE="#{navegacaoMB.testAction2()}:[any]" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#navegacaoPorXML#*:2"
+  PATH="/navegacaoPorXML/*" SHAPE="32,561,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#navegacaoPorXML#*:2" NAME="item"
+   PATH="/navegacaoPorXML/*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="testCondition::#navegacaoPorXML#page1.xhtml"
+    NAME="output" PATH="/navegacaoPorXML/page1.xhtml"
+    TARGET="rules:#navegacaoPorXML#page1.xhtml" TITLE="testCondition" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+</PROCESS>

@@ -1,0 +1,37 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:cc="http://java.sun.com/jsf/composite">
+
+	<cc:interface>
+		<!-- De acordo com a especificacao, alguns atributos nao devem ser especificados com cc:attribute, caso sejam especificados, 
+			 o comportamento sera indefinido:
+			 - id
+			 - binding
+			 - inView
+			 - parent
+			 - rendered
+			 - rendererType
+			 - transient
+		-->
+		<!-- Por padrao, o tipo do atributo type é java.lang.Object -->
+		<cc:attribute name="prependFormId" type="boolean" default="false" />
+		<cc:attribute name="formId" type="java.lang.String" default="mainForm" />
+		<cc:attribute name="buttonId" type="java.lang.String" default="btn" />
+
+		<!-- Caso os atributos marcados como required=true nao forem especificados, uma excecao sera lancada. -->
+		<cc:attribute name="value" type="java.lang.String" required="true" />
+
+		<!-- Os atributos type e method-signature sao mutualmente exclusivos, caso os dois sejam especificados, method-signature sera ignorado. -->
+		<!-- Por padrao, o tipo retornado por method-signature sempre será uma expressao de metodo. -->
+		<cc:attribute name="action" method-signature="java.lang.String action()" required="true" />
+
+		<cc:attribute name="immediate" type="boolean" default="false" />
+	</cc:interface>
+
+	<cc:implementation>
+		<!-- O ID do componente composto sempre sera anexado antes dos ids dos componentes especificados na implementacao do composite component. -->
+		<h:form prependId="#{cc.attrs.prependFormId}" id="#{cc.attrs.formId}">
+			<h:commandButton action="#{cc.attrs.action}" value="#{cc.attrs.value}" immediate="#{cc.attrs.immediate}" id="#{cc.attrs.buttonId}" />
+		</h:form>
+	</cc:implementation>
+
+</ui:composition>

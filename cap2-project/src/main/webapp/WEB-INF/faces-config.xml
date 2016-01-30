@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd" version="2.0">
+
+	<application>
+		<!-- É possivel internacionalizar uma aplicacao JSF utilizando o recurso de messages bundles. O JSF facilita essa tarefa permitindo a configuracao de arquivos 
+			de mensagens .properties que serao carregados pelo class loader. As mensagens deste arquivo ficarao desponiveis dentro de uma mapa acessivel pelas paginas xhtml 
+			atraves da variavel declarada em var -->
+		<resource-bundle>
+			<!-- Nome base do arquivo .properties. Ou seja, nome do pacote + nome do arquivo sem a extensao. -->
+			<base-name>messages.messages</base-name>
+
+			<!-- Nome da variavel que permitira o acesso as mensagens do arquivo especificado. -->
+			<var>msg</var>
+		</resource-bundle>
+
+		<!-- 
+			A localidade do arquivo de mensagens é recuperada atraves de 4 formas:
+		
+			- Especificando a localidade do arquivo (<base-name>messages.messages_pt_BR</base-name>);
+								
+			- Informacao de cabecalho Accept-Language informada pelo navegador. Caso o navegador envie esta informacao de cabecalho, o JSF verificara entre as
+			localidades suportadas (supported-locale) qual é a mais adequada e utilizara esta localidade para encontrar o arquivo de mensagens. Se o navegador
+			nao enviar esta informacao, ou o locale enviado nao for suportado, a localidade especificada em default-locale será utilizada;
+				
+			- Especificar o local programaticamente atraves da definicao do locale na instancia corrente de UIViewRoot;
+				
+			- Especificar a string de localizacao no atributo locale de f:view.			
+		 -->
+		<locale-config>
+			<default-locale>pt_BR</default-locale>
+			<supported-locale>en_US</supported-locale>
+		</locale-config>
+	</application>
+	
+	
+	<!-- Definicao do ManagedBeans (Caso um managedbean seja especificado com o mesmo nome de um managedbean definido por meio de anotacoes,
+		a configuracao XML leva precendencia). -->
+		
+	<!-- O atributo eager é utilizado somente se o escopo informado for de aplicacao -->
+	<managed-bean eager="true">
+		<managed-bean-name>applicationXMLMB</managed-bean-name>
+		<managed-bean-class>managedbeans.xml.CustomApplicationMB</managed-bean-class>
+		<managed-bean-scope>application</managed-bean-scope>
+		<managed-property>
+			<property-name>texto</property-name>
+			<property-class>java.lang.String</property-class>
+			<value>Valor de Teste</value>
+		</managed-property>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>viewXMLMB</managed-bean-name>
+		<managed-bean-class>managedbeans.xml.CustomViewMB</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+		
+		<managed-property>
+			<property-name>texto</property-name>
+			<!-- Caso property-class seja omitido, o valor padrao sera java.lang.String -->
+			<property-class>java.lang.String</property-class>
+			<null-value/>
+		</managed-property>
+		
+		<managed-property>
+			<property-name>cidades</property-name>
+			<property-class>java.util.List</property-class>
+			<list-entries>
+				<!-- Caso value-class seja omitido, o valor padrao sera java.lang.String -->
+				<value-class>java.lang.String</value-class>
+				<value>SP</value>
+				<value>RJ</value>
+				<value>BA</value>
+			</list-entries>
+		</managed-property>
+		
+		<managed-property>
+			<property-name>mapa</property-name>
+			<property-class>java.util.Map</property-class>
+			<map-entries>
+				<!-- Caso key-class seja omitido, o valor padrao sera java.lang.String -->
+				<key-class>java.lang.String</key-class>
+				
+				<!-- Caso value-class seja omitido, o valor padrao sera java.lang.String -->
+				<value-class>java.lang.String</value-class>
+				<map-entry>
+					<key>1</key>
+					<value>Teste 1</value>
+				</map-entry>
+				
+				<map-entry>
+					<key>2</key>
+					<value>Teste 2</value>
+				</map-entry>
+		
+				<map-entry>
+					<key>3</key>
+					<null-value/>
+				</map-entry>
+			</map-entries>
+		</managed-property>
+	</managed-bean>
+
+</faces-config>

@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+	<title>Converter</title>
+</h:head>
+<h:body>
+	<h:messages />
+
+	<h:form>
+		<h:panelGrid>
+			<h:panelGroup>
+				<h3>Atributo converter</h3>
+				<!-- 
+					É possível especificar conversores atraves do atributo converter dos componentes. A utilizacao abaixo é equivalente a especificacao
+					do conversor f:convertDateTime sem atributos.
+				-->
+				<!-- 
+					No atributo converter é possível especificar o ID do conversor ou uma instancia de um objeto do tipo javax.faces.Converter.
+				-->
+				<h:inputText converter="javax.faces.DateTime" />
+			</h:panelGroup>
+
+			<h:panelGroup>
+				<h3>Converter</h3>
+				<!-- 
+					O JSF possui conversores padroes para todos os tipos primitivos e suas classes Wrappers, assim como, BigInteger e BigDecimal. 
+					Abaixo os ID de todos os conversores padroes do JSF:
+					- javax.faces.DateTime
+					- javax.faces.Number
+					- javax.faces.Boolean
+					- javax.faces.Byte
+					- javax.faces.Short
+					- javax.faces.Character
+					- javax.faces.Integer
+					- javax.faces.Long
+					- javax.faces.Float
+					- javax.faces.Double
+					- javax.faces.BigInteger
+					- javax.faces.BigDecimal
+					- javax.faces.Enum
+				-->
+				<h:inputText>
+					<!-- O componente f:converter serve para especificar um conversor atraves de um ID. -->
+					<f:converter converterId="javax.faces.DateTime" />
+				</h:inputText>
+			</h:panelGroup>
+
+			<h:commandButton value="OK" />
+		</h:panelGrid>
+	</h:form>
+</h:body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<!-- Parametros de visualizacao é um mecanismo para consumir parametros passados atraves da URL em requisicoes GET.
+	Devem estar contidos dentro da tag metadata, que nada mais é do que um atalho para o facet metadata do objeto
+	UIViewRoot atual, e nao devem estar em paginas que utilizam templates, isto é, a secao metadata deve estar contida
+	apenas na pagina que servira como template. -->
+<f:metadata>
+	<f:viewParam name="itemID" value="#{bookmarkabilityMB.itemID}" />
+</f:metadata>
+
+<h:head>
+	<title>Page 1</title>
+</h:head>
+<h:body>
+	<h:messages />
+
+	<h3>View Params</h3>
+	#{bookmarkabilityMB.itemID}
+	
+	<hr />
+	<!-- O outcome dos componentes link e button, diferentemente dos componentes commandLink e commandButton, sao avaliados antes da pagina ser
+		renderizada, deste modo, caso alguma regra de navegacao nao seja encontrada, este link ou button nao sera habilitado. Já nos componentes
+		command, a avaliacao so ocorre caso o usuário clique no link ou no botao. -->
+	<h3>Requisicoes GET</h3>
+	<h:panelGrid>
+		<!-- O JSF 2.0 adicionou suporte a requisicoes GET e ao conceito de bookmarkability. Desta forma é possível criar URL's registraveis. -->
+		<!-- Este link fara uma requisicao GET para a pagina representada pelo ID de visualizacao /bookmarkability/page2.xhtml -->
+		<h:link outcome="page2" value="Go to Page 2" />
+
+		<!-- O atributo includeViewParams faz com que os parametros de visualizacao informados seram inseridos na URL produzida por este
+			link caso a página de destino (no caso page2) também especifique uma secao metadata com viewParams iguais aos recebidos por esta
+			pagina. -->
+		<h:link outcome="page2" value="Go to Page 2" includeViewParams="true" />
+
+		<!-- includeViewParams também pode ser informado como parametro de URL no outcome. Este exemplo possui o mesmo comportamento
+			do exemplo acima. -->
+		<h:link outcome="page2?includeViewParams=true" value="Go to Page 2" />
+
+		<!-- Caso includeViewParams seja informado no outcome e no atributo, e se algum dos valores for true, os parametros de visualizacao
+			serao inseridos na URL gerada por este link. -->
+		<h:link outcome="page2?includeViewParams=true" value="Go to Page 2" includeViewParams="false" />
+
+		<!-- Caso includeViewParams seja informado no outcome e no atributo, o valor informado no outcome seja false, e o valor informado
+			no atributo seja true, os parametros de visualizacao serao inseridos na URL, além disso, o parametro includeViewParams=false
+			tambem sera incluido na URL. -->
+		<h:link outcome="page2?includeViewParams=false" value="Go to Page 2" includeViewParams="true" />
+
+		<!-- Os parametros de visualizacao serao sempre os ultimos na lista de parametros da URL gerada. -->
+		<h:link outcome="page2?param=Teste" value="Go to Page 2" includeViewParams="true" />
+
+		<!-- O parametros informados com o componente f:param têm precendencia sobre qualquer outro parametro. -->
+		<h:link outcome="page2" value="Go to Page 2" includeViewParams="true">
+			<f:param name="teste" value="teste" />
+		</h:link>
+
+		<!-- A URL gerada neste link sera http://localhost:8080/cap3-project/bookmarkability/page2.jsf?teste=teste&amp;param=teste&amp;itemID=10 -->
+		<h:link outcome="page2?param=teste" value="Go to Page 2" includeViewParams="true">
+			<f:param name="teste" value="teste" />
+		</h:link>
+	</h:panelGrid>
+
+	<hr />
+	<h3>Requisicoes POST</h3>
+	<h:form>
+		<h:panelGrid>
+			<!-- É possível utilizar o parametro includeViewParams para repassar os parametros de visualizacao recebidos por esta pagina
+				em commandLinks e commandButtons, desde que seja feito um redirecionamento fisico (faces-redirect=true). Neste caso,
+				a pagina de destino nao precisa especificar uma secao metadata com viewParams iguais aos parametros de requisicao desta pagina. -->
+			<h:commandButton action="page2?faces-redirect=true&amp;includeViewParams=true" value="Go to Page 2" />
+
+			<!-- Para passar parametros de requisicao no action, um redirecionamento fisico deve ser realizado. -->
+			<h:commandButton action="page2?faces-redirect=true&amp;teste=teste" value="Go to Page 2" />
+
+			<!-- Este parametro nao sera passado, pois um redirecionamento fisico nao esta sendo realizado. -->
+			<h:commandButton action="page2?teste=teste" value="Go to Page 2" />
+
+			<!-- Para passar parametros de URL em uma chamada POST, é preciso utilizar a tag f:param. -->
+			<h:commandButton action="page2" value="Go to Page 2">
+				<f:param name="teste" value="teste" />
+			</h:commandButton>
+
+			<!-- Caso f:param seja informada, mas um redirecionamento fisico esteja sendo feito, estes parametros de URL
+				nao serao passados para a pagina seguinte. -->
+			<h:commandButton action="page2?faces-redirect=true" value="Go to Page 2">
+				<f:param name="teste" value="teste" />
+			</h:commandButton>
+		</h:panelGrid>
+	</h:form>
+
+	<hr />
+	<h3>Regras de Navegacao com Redirecionamento e parametros</h3>
+	<h:panelGrid>
+		<!-- Utilizando regras de navegacao por XML ainda é possível informar mais parametros de URL atraves do componente f:param. -->
+		<h:link outcome="teste1" value="Go to Page 2">
+			<f:param name="teste" value="100" />
+		</h:link>
+
+		<h:link outcome="teste2" value="Go to Page 2" />
+	</h:panelGrid>
+
+	<h:form>
+		<h:panelGrid>
+			<h:commandButton action="teste2" value="Go to Page 2" />
+		</h:panelGrid>
+	</h:form>
+</h:body>
+</html>

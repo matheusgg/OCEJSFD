@@ -1,0 +1,16 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:cft="http://customFaceletsTags.com.br">
+
+<h:head>
+	<title>Component</title>
+</h:head>
+<h:body>
+	<!-- ui:component possui os atributos id, binding e rendered. Desta forma, é possível recupera-lo atraves da pesquisa
+		 de componentes. -->
+	<h3>#{component.findComponent('componentTest')}</h3>
+
+	<ui:include src="/component1.xhtml" />
+	
+</h:body>
+</html>

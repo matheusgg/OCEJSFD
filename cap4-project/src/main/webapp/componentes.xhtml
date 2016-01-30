@@ -1,0 +1,436 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+	<title>Componentes</title>
+</h:head>
+<h:body>
+	<div id="core">
+		<h1>Core</h1>
+	</div>
+
+	<h3>Attribute / Param / Facet</h3>
+	<h:outputText value="#{component.attributes['attr']} / #{component.children} / #{component.facets}">
+		<f:attribute name="attr" value="teste" />
+		<f:param name="param" value="teste" />
+		<f:facet name="facet">Teste</f:facet>
+	</h:outputText>
+	<hr />
+
+	<h1>HTML</h1>
+
+	<h3>Find Component</h3>
+	<h:form>
+		<h:outputText value="Teste Find Component" id="txtFind" />
+		<br />
+		<h:commandButton actionListener="#{componentesMB.testFind}" value="Test Find" />
+	</h:form>
+	<h:form id="form2">
+		<h:outputText value="Texto do Segundo Formulario" id="txtForm2" />
+	</h:form>
+	<hr />
+
+	<h3>Binding</h3>
+	<h:outputText value="Teste de Binding" binding="#{componentesMB.htmlOutputText}" />
+	<hr />
+
+	<h3>OutputStylesheet</h3>
+	<!-- Com OutputStylesheet, as folhas de estilo sao incluidas empre na secao head da pagina.  -->
+	<h:outputStylesheet name="estilo1.css" library="css" />
+
+	<!-- É possivel incluir conteudo dentro da tag outputStylesheet. Caso seja especificado os atributos name e value, o conteúdo será ignorado. -->
+	<h:outputStylesheet>
+		.teste{
+			color: #fff;
+		}
+	</h:outputStylesheet>
+	<hr />
+
+	<h3>OutputScript</h3>
+	<!-- Com outputScript, caso o atributo target nao seja informado, o script será incluido no ponto de declaracao da tag. -->
+	<!-- 	<h:outputScript name="script1.js" library="js" /> -->
+
+	<!-- Será incluido na secao head -->
+	<!-- 	<h:outputScript name="script1.js" library="js" target="head" /> -->
+
+	<!-- Será incluido sempre no final da secao body -->
+	<!-- 	<h:outputScript name="script1.js" library="js" target="body" /> -->
+
+	<!-- É possivel incluir conteudo dentro da tag outputScript. Caso seja especificado os atributos name e value, o conteúdo será ignorado. -->
+	<h:outputScript target="head">
+		function teste(){
+			alert('Teste');
+		}
+	</h:outputScript>
+	<!-- Tanto no componente OutputStylesheet quanto em OutputScript, o atributo value nao tem efeito. Outro ponto importante
+		é que nao é possivel incluir o mesmo recurso mais do que uma vez na mesma pagina. -->
+	<hr />
+
+	<h3>GraphicImage</h3>
+	<h:graphicImage value="/resources/img/jsf-logo.png" width="200" height="100" />
+	<h:graphicImage url="/resources/img/jsf-logo.png" width="200" height="100" />
+	<h:graphicImage name="jsf-logo.png" library="img" width="200" height="100" />
+	<h:graphicImage value="#{resource['img:jsf-logo.png']}" width="200" height="100" />
+	<hr />
+
+	<h3>PanelGrid</h3>
+	<h:panelGrid columns="3" cellpadding="30" rowClasses="row1, row2" columnClasses="col1, col2" captionClass="col2" headerClass="row2"
+		footerClass="col2" style="text-align: center">
+		<f:facet name="caption">
+			Grid
+		</f:facet>
+
+		<f:facet name="header">
+			Cabecalho
+		</f:facet>
+
+		<f:facet name="footer">
+			Rodapé
+		</f:facet>
+
+		<h:outputText value="1" />
+		<h:outputText value="2" />
+		<h:outputText value="3" />
+
+		<h:outputText value="4" />
+		<h:outputText value="5" />
+		<h:outputText value="6" />
+
+		<h:outputText value="7" />
+		<h:outputText value="8" />
+		<h:outputText value="9" />
+	</h:panelGrid>
+	<hr />
+
+	<h3>PanelGroup</h3>
+	<h:panelGroup styleClass="col2">
+		Painel de Grupo
+	</h:panelGroup>
+	<hr />
+
+	<h3>Form</h3>
+	<h:form prependId="false">
+		<h:commandButton value="Test Form" />
+	</h:form>
+	<hr />
+
+	<h3>InputText / InputSecret / InputTextarea / InputHidden</h3>
+	<h:form prependId="false">
+		<h:messages />
+		<h:panelGrid columns="2">
+			Valor: <h:inputText autocomplete="off" required="true" requiredMessage="Valor Obrigatório!" label="Campo de Texto" />
+			Senha: <h:inputSecret autocomplete="off" required="true" requiredMessage="Preencha a senha!" redisplay="true" />
+			Texto: <h:inputTextarea rows="5" cols="100" />
+		</h:panelGrid>
+		<h:commandButton value="OK" />
+		<h:inputHidden value="Teste" required="true" />
+	</h:form>
+	<hr />
+
+	<h3>OutputText / OutputFormat</h3>
+	<h:panelGrid>
+		<!-- Por padrao, os componentes outputText, outputFormat, outputLabel, selectItem e as expressoes de valores fazem o escape automatico do texto. -->
+		<h:outputText value="#{componentesMB.htmlDiv}" />
+		
+		#{componentesMB.htmlDiv}
+		
+		<h:outputText value="#{componentesMB.htmlDiv}" escape="false" />
+
+		<!-- Nao é permitido que seja utilizado diretamente os caracteres <, > ou & no atributos value dos componentes em páginas xhtml. -->
+		<!-- 	<h:outputFormat value="<div></div>" escape="false" /> -->
+		<h:outputFormat value="#{componentesMB.htmlDiv}" escape="false" />
+
+		<h:outputFormat value="Seja bem vindo {0}">
+			<f:param value="Usuário" />
+		</h:outputFormat>
+	</h:panelGrid>
+	<hr />
+
+	<h3>CommandButton / Button</h3>
+	<h:form>
+		<h:messages />
+
+		<h:panelGrid>
+			<h:inputText />
+
+			<h:commandButton action="#{componentesMB.show()}" value="Botao de Comando Submit" />
+
+			<!-- Se o tipo do botao for reset ou button, o atributo action será ignorado. -->
+			<h:commandButton action="#{componentesMB.show()}" value="Botao de Comando Reset" type="reset" />
+			<h:commandButton action="#{componentesMB.show()}" value="Botao de Comando Button" type="button" />
+
+			<!-- Mesmo o type da tag gerada ser image, este botao realiza o submit do formulario. -->
+			<h:commandButton action="#{componentesMB.show()}" value="Botao de Comando Image" image="#{resource['img:jsf-logo.png']}"
+				style="width: 100px; height: 50px" />
+
+			<!-- Caso o caminho do atributo image comece com /, o componente commandButton adicionara automaticamente o context-root da aplicacao. -->
+			<h:commandButton action="#{componentesMB.show()}" value="Botao de Comando Image" image="/resources/img/jsf-logo.png"
+				style="width: 100px; height: 50px" />
+
+			<!-- Caso uma expressao de valor seja utilizada no outcome de button ou link e resulte em um valor nulo ou uma string vazia, 
+				este botao ou link será desabilitado pois o caso de navegacao nao foi resolvido. -->
+			<!-- 	<h:button value="Button GET" outcome="#{componentesMB.outcome}" /> -->
+			<h:button value="Button GET" />
+
+			<!-- O atributo fragment serve para especificar o ID de um fragmento de pagina. Assim quando este link for clicado,
+				o browser exibira o fragmento que possuir o ID especificado. Neste caso, nao será feita nenhuma requisicao. -->
+			<h:button value="Button GET com Fragment" fragment="core" />
+		</h:panelGrid>
+	</h:form>
+	<hr />
+
+	<h3>CommandLink / Link</h3>
+	<h:form>
+		<h:messages />
+
+		<h:panelGrid>
+			<h:inputText />
+
+			<h:commandLink action="#{componentesMB.show()}" value="Link de Comando" />
+
+			<!-- Caso o atributo value seja especificado junto com um conteudo aninhado dentro de commandLink, os dois serao renderizados. -->
+			<h:commandLink action="#{componentesMB.show()}" value="Link de Comando">
+				Texto aninhado
+			</h:commandLink>
+
+			<!-- O atributo type de commandLink, diferentemente do type de commandButton, significa o tipo de conteudo linkado com este componente. -->
+			<h:commandLink action="#{componentesMB.show()}" value="Link de Comando com Type" type="text/html" />
+
+			<h:commandLink action="#{componentesMB.show()}" value="Link de Comando com Imagem">
+				<h:graphicImage value="#{resource['img:jsf-logo.png']}" width="200" height="100" />
+			</h:commandLink>
+
+			<h:link value="Link GET" />
+
+			<!-- O atributo fragment serve para especificar o ID de um fragmento de pagina. Assim quando este link for clicado,
+				o browser exibira o fragmento que possuir o ID especificado. Neste caso, nao será feita nenhuma requisicao. -->
+			<h:link value="Link GET com Fragment" fragment="core" />
+		</h:panelGrid>
+	</h:form>
+	<hr />
+
+	<h3>OutputLink</h3>
+	<h:panelGrid>
+		<!-- Com OutputLink, o valor especificado em value é utilizado no atributo href. -->
+		<h:outputLink value="https://javaserverfaces.java.net/" target="_blank">
+			<h:graphicImage value="#{resource['img:jsf-logo.png']}" width="200" height="100" />
+		</h:outputLink>
+
+		<h:outputLink value="#core">Core</h:outputLink>
+	</h:panelGrid>
+	<hr />
+
+	<h3>SelectBooleanCheckbox</h3>
+	<h:selectBooleanCheckbox value="#{componentesMB.selected}" id="select" />
+	<h:outputLabel value="Selecione" for="select" />
+	<hr />
+
+	<h3>SelectManyCheckbox</h3>
+	<h:form>
+		<h:panelGrid>
+			<!-- Por padrao, o value de selectItem deve apontar para um atributo do tipo javax.faces.model.SelectItem. Para especificar outros tipos, deve
+				ser utilizado os atributos itemLabel e itemValue. Caso itemValue nao seja informado, a requisicao nao será enviada para o servidor.
+				Se o atributo itemValue for informado sozinho, ele será utilizado tanto para o label quanto para o valor do item. -->
+			<h:selectManyCheckbox>
+				<f:selectItem itemLabel="Blue" itemValue="1" />
+				<f:selectItem itemLabel="Green" itemValue="2" />
+				<f:selectItem itemLabel="Black" itemValue="3" />
+				<f:selectItem itemValue="4" />
+			</h:selectManyCheckbox>
+
+			<!-- O atributo collectionType serve para indicar o tipo da colecao que será criada com os itens selecionados. Por padrao,
+				é retornada uma colecao do tipo do valor especificado pelo atributo value. É possível informar apenas subtipos concretos 
+				de java.util.Collection ou arrays. -->
+			<h:selectManyCheckbox collectionType="java.util.ArrayList">
+				<f:selectItem itemLabel="Brasil" itemValue="1" />
+				<f:selectItem itemLabel="França" itemValue="2" />
+			</h:selectManyCheckbox>
+
+			<!-- Trabalhando com array. -->
+			<h:selectManyCheckbox value="#{componentesMB.itens}" collectionType="java.lang.String[]">
+				<f:selectItem itemLabel="1" itemValue="1" />
+				<f:selectItem itemLabel="2" itemValue="2" />
+				<f:selectItem itemLabel="3" itemValue="3" />
+			</h:selectManyCheckbox>
+
+			<!-- Opcoes -->
+			<h:selectManyCheckbox value="#{componentesMB.itensSelecionados}" border="1" collectionType="java.util.LinkedList"
+				hideNoSelectionOption="true" enabledClass="habilitado" disabledClass="desabilitado" selectedClass="selecionado"
+				unselectedClass="nao-selecionado" layout="pageDirection">
+				<f:selectItem itemLabel="1" itemValue="1" />
+				<f:selectItem itemLabel="2" itemValue="2" />
+				<f:selectItem itemLabel="3" itemValue="3" itemDisabled="true" itemDescription="Descricao do Item 3" />
+				<f:selectItem itemLabel="4" itemValue="4" noSelectionOption="true" />
+			</h:selectManyCheckbox>
+
+			<h:commandButton value="OK" />
+		</h:panelGrid>
+	</h:form>
+	<hr />
+
+	<h3>SelectOneRadio</h3>
+	<h:form>
+		<h:panelGrid>
+			<!-- Diferente de selectManyCheckbox, caso um selectItem nao especifique um itemLabel, o valor de itemValue nao será utilizado como o label do radio. -->
+			<h:selectOneRadio hideNoSelectionOption="true" value="#{componentesMB.itemSelecionado}" layout="lineDirection">
+				<f:selectItem itemValue="Item 1" />
+				<f:selectItem itemLabel="Item 2" itemValue="2" />
+				<f:selectItem itemLabel="Item 3" itemValue="3" noSelectionOption="true" />
+				<f:selectItem itemLabel="Item 4" />
+
+				<!-- Quando o atributo value é especificado, os atributos itemValue e itemLabel sao ignorados. -->
+				<f:selectItem value="#{componentesMB.selectItemOption}" itemValue="40" itemLabel="Teste" />
+			</h:selectOneRadio>
+
+			<h:commandButton value="OK" />
+		</h:panelGrid>
+	</h:form>
+	<hr />
+
+	<!-- A unica coisa que diferencia os ListBoxes dos Menus do HTML gerado é o atributo size. -->
+	<h3>SelectOneListbox</h3>
+	<h:form>
+		<h:panelGrid>
+			<h:selectOneListbox value="#{componentesMB.itemSelecionado}" size="2">
+				<f:selectItem itemLabel="Portugues" itemValue="1" />
+				<f:selectItem itemLabel="Ingles" itemValue="2" />
+				<f:selectItem itemLabel="Espanhol" itemValue="3" />
+				<f:selectItem itemLabel="Frances" itemValue="4" />
+				<f:selectItem itemLabel="Alemao" itemValue="5" />
+			</h:selectOneListbox>
+
+			<h:commandButton value="OK" />
+		</h:panelGrid>
+	</h:form>
+	<hr />
+
+	<h3>SelectManyListbox</h3>
+	<h:form>
+		<h:panelGrid>
+			<h:selectManyListbox value="#{componentesMB.itensSelecionados}" size="2" collectionType="java.util.ArrayList">
+				<f:selectItem itemLabel="Portugues" itemValue="1" />
+				<f:selectItem itemLabel="Ingles" itemValue="2" />
+				<f:selectItem itemLabel="Espanhol" itemValue="3" />
+				<f:selectItem itemLabel="Frances" itemValue="4" />
+				<f:selectItem itemLabel="Alemao" itemValue="5" />
+			</h:selectManyListbox>
+
+			<h:commandButton value="OK" />
+		</h:panelGrid>
+	</h:form>
+	<hr />
+
+	<h3>SelectOneMenu</h3>
+	<h:form>
+		<h:panelGrid>
+			<h:selectOneMenu value="#{componentesMB.itemSelecionado}">
+				<f:selectItem itemLabel="Portugues" itemValue="1" />
+				<f:selectItem itemLabel="Ingles" itemValue="2" />
+				<f:selectItem itemLabel="Espanhol" itemValue="3" />
+				<f:selectItem itemLabel="Frances" itemValue="4" />
+				<f:selectItem itemLabel="Alemao" itemValue="5" />
+			</h:selectOneMenu>
+
+			<h:commandButton value="OK" />
+		</h:panelGrid>
+	</h:form>
+	<hr />
+
+	<h3>SelectManyMenu</h3>
+	<h:form>
+		<h:panelGrid>
+			<h:selectManyMenu value="#{componentesMB.itensSelecionados}" collectionType="java.util.ArrayList">
+				<f:selectItem itemLabel="Portugues" itemValue="1" />
+				<f:selectItem itemLabel="Ingles" itemValue="2" />
+				<f:selectItem itemLabel="Espanhol" itemValue="3" />
+				<f:selectItem itemLabel="Frances" itemValue="4" />
+				<f:selectItem itemLabel="Alemao" itemValue="5" />
+			</h:selectManyMenu>
+
+			<h:commandButton value="OK" />
+		</h:panelGrid>
+	</h:form>
+
+	<h3>SelectItem / SelectItems</h3>
+	<h:form>
+		<h:messages />
+
+		<h:panelGrid>
+			<!-- SelectItem -->
+			<h:selectOneListbox value="#{componentesMB.itemSelecionado}">
+				<f:selectItem itemLabel="Portugues" itemValue="1" />
+				<f:selectItem itemLabel="Ingles" itemValue="2" />
+				<f:selectItem itemLabel="Espanhol" itemValue="3" />
+				<f:selectItem value="#{componentesMB.selectItemOption}" />
+			</h:selectOneListbox>
+
+			<!-- O atributo value de SelectItems pode receber um objeto SelectItem, uma colecao ou um array. -->
+			<h:selectManyListbox value="#{componentesMB.itensSelecionados}">
+
+				<!-- Uma unica instancia de SelectItem -->
+				<f:selectItems value="#{componentesMB.selectItemOption}" />
+
+				<!-- Lista de SelectItem -->
+				<!-- Caso o valor do atributo value seja uma lista (ou array) de SelectItem ou um mapa, os atributos itemLabel, itemValue, etc. serao ignorados. -->
+				<f:selectItems value="#{componentesMB.selectItems}" var="item" itemLabel="#{item.value}" itemValue="#{item.label}" />
+
+				<!-- Mapa de Integer e Object. A chave será o label enquanto o value será o valor do item. Quando um mapa é utilizado no value de SelectItems,
+					O JSF cria uma instancia de SelectItem para cada entrada do mapa, deste modo, os atributos itemLabel, itemValue, etc. serao ignorados. 
+					Quando se utiliza um mapa, nao é possivel especificar os atributos itemDisabled e noSelectionOption. -->
+				<f:selectItems value="#{componentesMB.mapaItens}" var="item" itemLabel="#{item.value}" />
+			</h:selectManyListbox>
+
+			<!-- O valor especificado em value nao deve ser do tipo SelectItem. -->
+			<!-- 	<h:selectOneMenu value="#{componentesMB.selectItemSelecionado}"> -->
+			<!-- 		<f:selectItems value="#{componentesMB.selectItems}" var="item" itemLabel="#{item.value}" itemValue="#{item.label}" /> -->
+			<!-- 	</h:selectOneMenu> -->
+
+			<!-- Agrupando SelectItems com SelectItemGroup, que é uma subclasse de SelectItem -->
+			<h:selectOneListbox value="#{componentesMB.itemSelecionado}">
+				<f:selectItems value="#{componentesMB.grupos}" />
+			</h:selectOneListbox>
+
+			<h:commandButton value="OK" />
+		</h:panelGrid>
+	</h:form>
+
+	<!-- Nos componentes SelectMany, é possível especificar uma colecao ou um array no atributo value. Porem o JSF precisa criar uma colecao antes de 
+		passa-la para o método setter. O seguinte algoritmo é utilizado para criar o valor de retorno com os itens selecionados:
+		- Se o componente possuir o atributo collectionType, utiliza o valor deste atributo para determinar o tipo do retorno;
+		- Caso contrario, tenta recuperar o valor informado para cloná-lo, limpa-lo e retorna-lo;
+		- Caso a clonagem nao funcione e o tipo do valor for java.util.SortedSet, retorna uma java.util.TreeSet. Se o tipo for
+		java.util.Set, retorna um java.util.HashSet. Se o tipo for java.util.Queue, retorna um java.util.LinkedList;
+		- Se todos os passos anteriores falharem, retorna um java.util.ArrayList.
+	 -->
+	<hr />
+
+	<h3>Mensagens</h3>
+	<h:form>
+		<h:panelGrid>
+			<!-- O atributo globalOnly faz com que apenas as mensagens que nao setejam atribuidas a nenhum componente sejam exibidas. -->
+			<h:messages globalOnly="true" layout="table" showDetail="true" tooltip="true" />
+
+			<!-- Por padrao, no componente messages, o atributo showSummary é igual a true e showDetail é igual a false. -->
+			<h:messages showSummary="true" showDetail="false" globalOnly="true" />
+
+			<!-- É possivel especificar o atributo for em messages, neste caso apenas mensagens relacionadas ao componente de id
+			 txt serao exibidas. -->
+			<h:messages for="txt" />
+
+			<h:inputText value="#{componentesMB.itemSelecionado}" label="Nome" id="txt" required="true" requiredMessage="Preencha o campo!" />
+
+			<!-- Por padrao, no componente message, showSummary é false e showDetail é true. -->
+			<!-- O atributo for em message é obrigatorio. -->
+			<h:message for="txt" showSummary="false" showDetail="true" />
+
+			<!-- O atributo tooltip indica se o detalhe da mensagem deve ser exibido como um tooltip. Este tooltip só será
+				exibido caso os atributos showDetail e showSummary tenham seus valores definidos como true. -->
+			<h:message for="txt" tooltip="true" showDetail="true" showSummary="true" />
+
+			<h:commandButton action="#{componentesMB.show()}" value="Show" />
+		</h:panelGrid>
+	</h:form>
+
+</h:body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:comp="http://components.com.br/ui">
+<h:head>
+	<title>Componentes Personalizados</title>
+</h:head>
+<h:body>
+	<h:form>
+		<h:messages />
+		<h:panelGrid columns="2" width="800px">
+			<h5>Custom InputText - Text</h5>
+
+			<!-- O atributo transient informa para o JSF nao salvar ou restaurar o estado deste componente. -->
+			<comp:inputText value="#{appMB.text}" id="text" valueChangeListener="#{appMB.change}" transient="true">
+				<f:facet name="label">
+					<h:outputText value="Legenda" />
+				</f:facet>
+			</comp:inputText>
+
+			<h5>Custom InputText - Number</h5>
+			<h:panelGroup>
+				<h:outputText value="#{appMB.number}" id="numberText" />
+				<comp:inputText value="#{appMB.number}" id="number" valueChangeListener="#{appMB.change}">
+					<f:ajax event="valueChange" render="@form" immediate="true" listener="#{appMB.ajaxTest}" />
+				</comp:inputText>
+			</h:panelGroup>
+
+			<h:commandButton value="OK" />
+			<comp:submitButton value="Submit Button" action="#{appMB.action()}" actionListener="#{appMB.actionListener}" immediate="true"
+				methodToInvoke="#{appMB.method()}" />
+		</h:panelGrid>
+	</h:form>
+</h:body>
+</html>

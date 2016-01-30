@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+	<title>Escopos</title>
+</h:head>
+<h:body>
+	<h1>ManagedBeans</h1>
+
+	<p>#{requestScopeMB}</p>
+	<p>#{viewScopeMB}</p>
+	<p>#{sessionScopeMB}</p>
+	<p>#{applicationScopeMB}</p>
+	<p>#{noneScopeMB}</p>
+	<p>#{customScopeMB}</p>
+
+
+	<h1>NamedBeans</h1>
+
+	<p>#{dependentScopeNamedMB}</p>
+	<p>#{requestScopeNamedMB}</p>
+	<p>#{conversationScopeNamedMB}</p>
+	<p>#{sessionScopeNamedMB}</p>
+	<p>#{applicationScopeNamedMB}</p>
+
+	<h1>ConversationScope</h1>
+	<p>#{conversationScopeNamedMB}</p>
+	<h:form>
+		<h:commandButton action="#{conversationScopeNamedMB.initConversation()}" value="Start Conversation" />
+		<br />
+		<h:outputLink value="conversationScope.jsf?cid=#{conversationScopeNamedMB.conversationID}">Test Conversation Scope</h:outputLink>
+	</h:form>
+	
+	<hr />
+	#{myCustomScope}
+</h:body>
+</html>

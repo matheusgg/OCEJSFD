@@ -1,0 +1,45 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:cc="http://java.sun.com/jsf/composite">
+
+	<!-- Para se especificar um componente composto, devem ser definidas a secao da interface e a secao de implementacao do componente.
+		 A secao de interface contem as configuracoes do componente, como por exemplo, atributos, componentes expostos, etc.
+		 A secao de implementacao contem o corpo do componente composto propriamente dito. -->
+
+	<!-- Todo o conteudo fora da secao de implementacao é ignorado. -->
+
+	<!-- A secao de interface só pode ser especificada uma vez. A secao de implementacao tambem só pode ser especificada uma vez, e deve possuir uma secao de 
+		 interface correspondente no mesmo documento. -->
+
+	<!-- O nome do componente composto é obtido atraves do nome do arquivo XHTML. O nome da biblioteca é obtido atraves do nome da pasta onde o arquivo
+		 XHTML está contido. Como o JSF trabalha com a configuracao por convencao, esta pasta deve estar dentro da pasta resources para que o componente
+		 composto seja identificado. -->
+
+	<cc:interface>
+		<cc:attribute name="showHeaderInfo" type="boolean" default="true" />
+		<cc:attribute name="showCookieInfo" type="boolean" default="true" />
+		<cc:attribute name="showRequestParams" type="boolean" default="true" />
+	</cc:interface>
+
+	<cc:implementation>
+		<h:panelGroup rendered="#{cc.attrs.showHeaderInfo}">
+			<h3>Headers</h3>
+			<p>
+				<h:outputText value="#{header}" />
+			</p>
+		</h:panelGroup>
+
+		<h:panelGroup rendered="#{cc.attrs.showCookieInfo}">
+			<h3>Cookies</h3>
+			<p>
+				<h:outputText value="#{cookie}" />
+			</p>
+		</h:panelGroup>
+
+		<h:panelGroup rendered="#{cc.attrs.showRequestParams}">
+			<h3>RequestParams</h3>
+			<p>
+				<h:outputText value="#{param}" />
+			</p>
+		</h:panelGroup>
+	</cc:implementation>
+</ui:composition>

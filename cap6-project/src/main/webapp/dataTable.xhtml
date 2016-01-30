@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<title>DataTable</title>
+
+	<style type="text/css">
+.even {
+	background-color: #708090;
+}
+
+.odd {
+	background-color: #B0C4DE;
+}
+
+.even-row {
+	background-color: #ADFF2F;
+}
+
+.odd-row {
+	background-color: #9ACD32;
+}
+</style>
+
+</h:head>
+
+<!-- O value do componente h:dataTable pode receber os seguintes valores:
+	- Um simples objeto;
+	- Um array;
+	- Uma instancia de java.util.List;
+	- Uma instancia de java.sql.ResultSet;
+	- Uma instancia de javax.servlet.jsp.jstl.sql.Result;
+	- javax.faces.model.DataModel
+-->
+
+<h:body>
+
+	<!-- h:dataTable com uma instancia de java.sql.ResultSet como value. Mais precisamente, uma instancia de
+		 CachedRowSet. -->
+	<!-- É possível atualizar os dados de uma dataTable diretamente na base quando se utiliza um value do tipo
+		 java.sql.ResultSet, porém esse ResultSet deve ser criado a partir de uma Statement ResultSet.CONCUR_UPDATABLE 
+		 e o driver deve suportar o método java.sql.ResultSet.updateRow(). -->
+	<h:form>
+		<h:messages style="list-style: none;" />
+		<h:dataTable value="#{dataTableMB.cachedRowSet}" var="cliente">
+			<h:column>
+				<f:facet name="header">ID</f:facet>
+				<h:outputText value="#{cliente['id']}" />
+			</h:column>
+
+			<h:column>
+				<f:facet name="header">Nome</f:facet>
+				<h:inputText value="#{cliente['nome']}" />
+			</h:column>
+
+			<h:column>
+				<h:commandLink value="Selecionar" action="#{dataTableMB.selectRow(cliente)}" />
+			</h:column>
+		</h:dataTable>
+		<h:commandButton value="Atualizar" />
+	</h:form>
+
+	<!-- Os atributos headerClass e footerClass de h:column tem precendencia sobre os atribtuos headerClass e footerClass de h:dataTable -->
+	<h3>Cabecalhos, rodapés e titulos</h3>
+	<h:dataTable value="#{dataTableMB.nomes}" var="nome" cellpadding="20" headerClass="even" footerClass="odd" captionClass="even"
+		captionStyle="height: 40px; padding-top: 25px; color: #fff">
+
+		<f:facet name="caption">
+			<h:outputText value="Titulo da tabela" />
+		</f:facet>
+
+		<h:column headerClass="odd">
+			<f:facet name="header">
+				Ultimo nome
+			</f:facet>
+			
+			#{nome.last},
+			
+			<f:facet name="footer">
+				Tipo de dado: alfa
+			</f:facet>
+		</h:column>
+
+		<h:column headerClass="odd-row" footerClass="even-row">
+			<f:facet name="header">
+				Primeiro nome
+			</f:facet>
+		
+			#{nome.first}
+			
+			<f:facet name="footer">
+				Tipo de dado: alfa
+			</f:facet>
+		</h:column>
+	</h:dataTable>
+	<hr />
+
+	<!-- O atributo columnClasses tem precendencia sobre o atributo rowClasses, pois ambos sao mutualmente exclusivos. -->
+	<!-- Caso seja especificado um numero de classes CSS menor do que o numero de colunas no atributo columnClasses, a dataTable nao
+		 reutilizara as classes CSS especificadas. Diferentemente do que acontece com o atributo rowClasses, isto é, caso seja
+		 especificado um numero de classes CSS menor do que o numero de linhas em rowClasses, a dataTable reutilizara essas classes
+		 até a ultima linha da tabela. -->
+	<h3>Atributos de DataTable</h3>
+
+	<!-- Os atributos first e rows devem que ser >= 0. -->
+	<h:dataTable value="#{dataTableMB.nomes}" var="nome" border="0" cellpadding="20" first="1" rows="3" summary="Sumário da tabela"
+		title="Titulo da tabela" rowClasses="even-row, odd-row, even" columnClasses="odd">
+		<h:column>
+			#{nome.last},
+		</h:column>
+		<h:column>
+			#{nome.first}
+		</h:column>
+	</h:dataTable>
+	<hr />
+
+	<h3>Simple DataTable</h3>
+	<h:dataTable value="#{dataTableMB.nomes}" var="nome">
+		<h:column>
+			#{nome.last},
+		</h:column>
+		<h:column>
+			#{nome.first}
+		</h:column>
+	</h:dataTable>
+	<hr />
+
+	<h3>Simple DataTable com um objeto</h3>
+	<h:dataTable value="#{dataTableMB.nome}" var="nome">
+		<h:column>
+			#{nome.last},
+		</h:column>
+		<h:column>
+			#{nome.first}
+		</h:column>
+	</h:dataTable>
+
+</h:body>
+</html>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<facelet-taglib version="2.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facelettaglibrary_2_0.xsd">
+
+	<namespace>http://customFaceletsTags.com.br</namespace>
+
+	<tag>
+		<tag-name>customLink</tag-name>
+
+		<!-- Os arquivos xhtml dos componentes Facelets customizados devem ficar dentro da pasta WEB-INF. -->
+		<source>faceletsTags/customLink.xhtml</source>
+	</tag>
+
+	<tag>
+		<attribute>
+			<name>value</name>
+			<required>true</required>
+		</attribute>
+
+		<attribute>
+			<name>rendered</name>
+			<type>boolean</type>
+		</attribute>
+
+		<tag-name>customInputText</tag-name>
+
+		<!-- Os arquivos xhtml dos componentes Facelets customizados devem ficar dentro da pasta WEB-INF. -->
+		<source>faceletsTags/customInputText.xhtml</source>
+	</tag>
+
+</facelet-taglib>

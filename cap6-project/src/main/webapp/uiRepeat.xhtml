@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<title>UIRepeat</title>
+</h:head>
+
+<!-- O componente ui:repeat é semelhante a h:dataTable, porém possui uma utilizacao semantica diferente da tabela de dados.
+	Enquanto o objetivo da dataTable é exibir um conjunto de dados no formato de tabela, o componente repeat tem como objetivo
+	repetir um determinado numero de vezes um determinado conjunto de componentes. -->
+
+<!-- O atributo value de ui:repeat pode conter os seguintes valores:
+	- Um objeto simples;
+	- Um Array;
+	- Um instancia de java.util.List;
+	- Uma instancia de java.sql.ResultSet. 
+-->
+
+<!-- Caso o value de ui:repeat seja null, nada sera renderizado. -->
+
+<h:body>
+
+	<!-- ui:repeat com java.sql.ResultSet -->
+	<!-- Devido a um bug na recuperacao do rowCount de ResultSetDataModel que retorna sempre -1, nao é possivel utilizar uma instancia de 
+		 java.sql.ResultSet como value de ui:repeat. -->
+	<!-- 		<ui:repeat var="cliente" value="#{repeatMB.resultSet}" offset="-1"> -->
+	<!-- 		#{cliente} <br /> -->
+	<!-- 		</ui:repeat> -->
+
+	<!-- Diferente do status do forEach das peginas JSP, o status de ui:repeat nao armazena a informacao do objeto corrente. -->
+	<h3>VarStatus</h3>
+	<ui:repeat var="nome" value="#{repeatMB.nomes}" varStatus="status" offset="0" step="1" size="7">
+		#{status} <br />
+	</ui:repeat>
+	<hr />
+
+	<!-- 
+		offset: Indice inicial;
+		step: Diferenca entre os indices (de quanto em quanto será exibido); 
+		size: Quantidade de itens que serao exibidos. Para calcular esta quantidade
+			  deve-se utilizar a formula (size = indice do ultimo elemento que devera ser exibido, 
+			  comecando por 0). Por padrao, size é calculado como size = (tamanho da colecao - offset) / step.
+	-->
+	<!-- Caso offset seja maior do que o tamanho da colecao ou o maior do que size, uma excecao sera lancada. -->
+	<!-- Caso o size seja maior do que o tamanho da colecao, uma excecao sera lancada. -->
+	<!-- Caso o step seja 0, uma execao sera lancada. -->
+	<h3>Indices</h3>
+	<ui:repeat var="nome" value="#{repeatMB.nomes}" offset="1" step="1" size="3">
+		#{nome.first} <br />
+	</ui:repeat>
+	<hr />
+
+	<h3>Iteracao com Lista</h3>
+	<ui:repeat var="nome" value="#{repeatMB.nomesList}">
+		#{nome.first} <br />
+	</ui:repeat>
+	<hr />
+
+	<h3>Iteracao com Array</h3>
+	<ui:repeat var="nome" value="#{repeatMB.nomes}">
+		#{nome.first} <br />
+	</ui:repeat>
+	<hr />
+
+	<h3>Iteracao com um Objeto</h3>
+	<ui:repeat var="teste" value="#{repeatMB.teste}">
+		<h:outputText value="#{teste}" />
+	</ui:repeat>
+</h:body>
+</html>

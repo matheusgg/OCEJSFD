@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+	<title>Custom Converter</title>
+</h:head>
+<h:body>
+	<h:messages showDetail="true" />
+
+	<h:form>
+		<h:panelGrid>
+			<!-- Caso vários conversores da mesma classe sejam especificados em um componente, mesmo possuindo um ID diferente, apenas um será registrado. -->
+			<h:inputText value="#{customConverterMB.creditCard}" converter="customconverter.CreditCardConverter">
+				<!-- O componente f:attribute permite adicionar atributos ao mapa de atributos do componente em questao. -->
+				<f:attribute name="customconverter.CreditCardConverter_pattern" value="\D" />
+
+				<!-- Este conversor nao será registrado, pois um conversor do mesmo tipo já foi registrado neste componente. -->
+				<f:converter converterId="customconverter.CreditCardConverter2" />
+			</h:inputText>
+
+			<!-- Mesmo com conversores personalizados, a mensagem definida em converterMessage sempre tem preferencia. Neste caso, a mensagem
+				especificada em converterMessage será utilizada no lugar da mensagem especificada na FacesMessage lancada atraves de uma
+				ConverterException dentro do conversor customizado. -->
+			<h:inputText converter="customconverter.CreditCardConverter" converterMessage="Número inválido!" />
+
+			<h:commandButton value="OK" />
+		</h:panelGrid>
+	</h:form>
+</h:body>
+</html>

@@ -1,0 +1,14 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" template="template.xhtml">
+
+	<ui:define name="content">
+		<!-- É possivel utilizar a tag ui:insert sem a definicao de um nome de secao, desta forma todo o conteudo filho que estiver
+			fora de um ui:define da tag que utilizar este template será inserido neste ponto de insercao. -->
+		<ui:insert>
+			Conteúdo
+		</ui:insert>
+		
+		<h1>#{customParam}</h1>
+	</ui:define>
+
+</ui:composition>

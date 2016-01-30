@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	version="3.0">
+	<display-name>security-project</display-name>
+
+	<welcome-file-list>
+		<welcome-file>index.jsf</welcome-file>
+	</welcome-file-list>
+
+	<!-- ======================================================= Faces Servlet ======================================================= -->
+	<servlet>
+		<servlet-name>Faces Servlet</servlet-name>
+		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+
+		<!-- O elemento security-role-ref faz uma ligacao entre uma role especifica utilizada por esta servlet para uma role mapeada nos elementos security-role. Deste 
+			modo, quando a role bigUser for utilizada, o container verificara se o usuario possui a role admin. -->
+		<security-role-ref>
+			<role-name>bigUser</role-name>
+			<role-link>admin</role-link>
+		</security-role-ref>
+
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>*.jsf</url-pattern>
+	</servlet-mapping>
+
+	<context-param>
+		<param-name>javax.faces.FACELETS_SKIP_COMMENTS</param-name>
+		<param-value>true</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>javax.faces.PROJECT_STAGE</param-name>
+		<param-value>Development</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>javax.faces.INTERPRET_EMPTY_STRING_SUBMITTED_VALUES_AS_NULL</param-name>
+		<param-value>true</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>javax.faces.VALIDATE_EMPTY_FIELDS</param-name>
+		<param-value>true</param-value>
+	</context-param>
+
+	<!-- ======================================================= Security ======================================================= -->
+
+	<!-- Declaracao das roles -->
+	<security-role>
+		<role-name>tomcat</role-name>
+	</security-role>
+
+	<!-- A role admin esta definida pela anotacao DeclareRoles em SecurityServlet -->
+	<!-- <security-role> -->
+	<!-- <role-name>admin</role-name> -->
+	<!-- </security-role> -->
+
+	<security-role>
+		<role-name>root</role-name>
+	</security-role>
+
+	<!-- Definicao de autenticacao. O elemento login-config deve aparecer apenas uma vez no web.xml -->
+
+	<!-- Existem 4 metodos de autenticacao previstos na especificacao Java EE: BASIC, DIGEST, CLIENT-CERT (SSL) e FORM. -->
+
+	<!-- Os valores possiveis do elemento auth-method sao os 4 metodos de autenticacao definidos pela especificacao Java EE e qualquer metodo de autenticacao especifico 
+		do servidor. -->
+
+	<!-- O método de autenticacao BASIC nao criptografa o login e senha informados, e envia essas informacoes atraves de campos de cabecalho da requisicao. Com este 
+		metodo de autenticacao, uma janela pop-up é exibida para o usuario informar os dados de login. -->
+	<!-- <login-config> -->
+	<!-- <auth-method>BASIC</auth-method> -->
+	<!-- Nome do realm que sera utilizado para autenticacao e recuperacao das informacoes do usuario -->
+	<!-- <realm-name>simpleRealm</realm-name> -->
+	<!-- </login-config> -->
+
+	<!-- A forma de autenticacao DIGEST, depois de CLIENT-CERT, é o metodo mais seguro, pois utiliza algoritmos de criptografia e geracao de hash para criptografar 
+		as informacoes de usuario antes de envia-las para o servidor. Deste modo, quando a requisicao chega ao servidor, ele recebe apenas um hash da senha do usuario. Como 
+		o servidor conhece este mecanismo de autenticacao, ele compara o hash recebido com o hash da senha do usuario informado, caso sejam iguais, a autenticacao é realizada. 
+		Este metodo de autenticacao tambem faz o navegador exibir um pop-up solicitando as informacoes do usuario. -->
+	<!-- <login-config> -->
+	<!-- <auth-method>DIGEST</auth-method> -->
+	<!-- <realm-name>simpleRealm</realm-name> -->
+	<!-- </login-config> -->
+
+	<!-- O metodo de autenticacao CLIENT-CERT trabalha com certificados e conexoes seguras SSL (HTTPS) para realizar a autenticacao. Para que este metodo possar ser 
+		utilizado, a requisicao deve ser uma requisicao HTTPS, caso contrario uma excecao sera lancada. -->
+	<!-- <login-config> -->
+	<!-- <auth-method>CLIENT-CERT</auth-method> -->
+	<!-- <realm-name>simpleRealm</realm-name> -->
+	<!-- </login-config> -->
+
+	<!-- O ultimo metodo de autenticacao é o FORM. Este metodo é o mais utilizado. Com ele, os dados de login do usuario sao solicitados atraves de um formulario HTML. 
+		De acordo com a especificacao JAAS, este formulario deve ter o action apontando para a URL j_security_check. Os campos de usuario e senha devem possuir os names 
+		j_username e j_password, deste modo, esses dados sao enviados como parametros da requisicao para o servidor, com isso, o container verifica as informacoes e autentica 
+		o usuario. -->
+	<login-config>
+		<auth-method>FORM</auth-method>
+		<realm-name>simpleRealm</realm-name>
+
+		<!-- No método de autenticacao form, é preciso configurar (form-login-config) a pagina de login (form-login-page) e a pagina de erro caso ocorra alum problema 
+			durante a autenticacao (form-error-page). Os caminhos das duas paginas devem comecar com barra "/" e sao relativas ao context-root da aplicacao. -->
+		<form-login-config>
+			<form-login-page>/login.jsf</form-login-page>
+			<form-error-page>/loginError.jsf</form-error-page>
+		</form-login-config>
+	</login-config>
+
+	<!-- Definicao de autorizacao -->
+
+	<!-- O elemento security-constraint serve para especificar configuracoes de autorizacao, ou seja, restricao aos recursos da aplicacao. Este elemento pode aparecer 
+		varias vezes no web.xml. -->
+	<security-constraint>
+
+		<!-- O elemento web-resource-collection é obrigatorio e pode aparecer varias vezes dentro de um mesmo security-constraint. Com ele, é possivel especificar os padroes 
+			de URL protegidas. -->
+		<web-resource-collection>
+
+			<!-- Nome da colecao de recursos (opcional) -->
+			<web-resource-name>protected</web-resource-name>
+
+			<!-- url-pattern indica para quais urls essa restricao se aplicara. É um elemento obrigatorio e pode aparecer varias vezes, inclusive em diferentes web-resource-collection. 
+				Caso isso aconteca, o container aplicara todas as restricoes onde essa url aparecer, ou seja, as restricoes serao somadas. -->
+			<url-pattern>/protected/*</url-pattern>
+
+			<!-- O elemento http-method indica os metodos HTTP onde essa restricao sera aplicada, para todos os outros metodos que nao estejam listados, ou que estejam presentes 
+				no elemento http-method-omission, essa restricao nao sera aplicada. -->
+			<http-method>GET</http-method>
+			<http-method>POST</http-method>
+			<http-method>PUT</http-method>
+			<http-method>DELETE</http-method>
+			<http-method>HEAD</http-method>
+			<http-method>OPTIONS</http-method>
+			<http-method>TRACE</http-method>
+		</web-resource-collection>
+
+		<!-- O elemento auth-constraint indica quais roles sao necessarias para acessar as URLs indicadas em web-resource-collection atraves dos metodos HTTP informados. 
+			O usuario precisa possuir pelo menos uma das roles especificadas pelos elementos role-name. É possivel utilizar o caractere coringa asterisco "*" para indicar que 
+			o usuario nao precisa possuir nenhuma role especifica, porem ele precisar estar autenticado. -->
+		<auth-constraint>
+			<role-name>admin</role-name>
+			<role-name>root</role-name>
+			<!-- <role-name>*</role-name> -->
+		</auth-constraint>
+	</security-constraint>
+
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>all</web-resource-name>
+			<url-pattern>/*</url-pattern>
+			<http-method>GET</http-method>
+			<http-method>POST</http-method>
+			<http-method>PUT</http-method>
+			<http-method>DELETE</http-method>
+			<http-method>HEAD</http-method>
+			<http-method>OPTIONS</http-method>
+			<http-method>TRACE</http-method>
+		</web-resource-collection>
+
+		<!-- O elemento user-data-constranti indica o tipo de seguranca que sera aplicada no transporte dos dados do usuario para o servidor. -->
+		<user-data-constraint>
+			<!-- O elemento transport-garantee aceita 3 valores: NONE, INTEGRAL e CONFIDENTIAL. Os valores INTEGRAL e CONFIDENTIAL sao geralmente aplicados com conexoes HTTPS, 
+				ou seja, eles exigem que a conexao com o servidor seja feita atraves de uma camada SSL sobre HTTP (HTTPS). O valor INTEGRAL faz com que o servidor garanta a integridade 
+				dos dados, isto é, garante que as informacoes que sairam do cliente sao as mesmas que chegaram no servidor. Ja o valor CONFIDENTIAL esta relacionada a confidencialidade, 
+				ou seja, o servidor garante que os dados enviados pelo cliente nao serao lidos por um terceiro elemento criptografando essas informacoes. -->
+			<transport-guarantee>NONE</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
+
+</web-app>

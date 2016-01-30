@@ -1,0 +1,22 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:cc="http://java.sun.com/jsf/composite">
+
+	<!-- 
+		 O atributo componentType serve para especificar uma classe que servira como backing component desse componente composto. Este recurso
+		 possibilita uma maior flexibilidade para a realizacao de tarefas complexas com componentes compostos. O valor do atributo componentType
+		 deve ser o valor especificado na anotacao @FacesComponent. O componente que possui o componentType especificado deve ser um UIComponent
+		 e deve implementar a interface NamingContainer.
+	-->
+	<cc:interface componentType="compositecomponents.backingcomponents.BackingDate">
+		<cc:attribute name="value" required="true" type="java.time.LocalDate" />
+	</cc:interface>
+
+	<cc:implementation>
+		<h:panelGrid columns="3">
+			<h:selectOneMenu id="days" />
+			<h:selectOneMenu id="months" />
+			<h:selectOneMenu id="years" />
+		</h:panelGrid>
+	</cc:implementation>
+
+</ui:composition>

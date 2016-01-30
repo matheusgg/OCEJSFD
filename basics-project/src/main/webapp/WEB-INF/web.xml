@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	version="3.0">
+	<display-name>cap1-project</display-name>
+
+	<welcome-file-list>
+		<welcome-file>index.jsf</welcome-file>
+	</welcome-file-list>
+
+	<!-- Em servidores de aplicacao web Java EE, a Faces Servlet é automaticamente registrada quando:
+		- Um arquivo faces-config.xml é encontrado dentro da pasta WEB-INF da aplicacao;
+		- Um arquivo faces-config.xml é encontrado dentro da pasta META-INF de algum jar do classpath da aplicacao;
+		- Um arquivo que termina com .faces-config.xml é encontrado dentro da pasta META-INF de algum jar do classpath da aplicacao;
+		- O parametro de inicializacao de contexto javax.faces.CONFIG_FILES é encontrado no web.xml. -->
+	<!-- Nesses casos, a Faces Servlet é mapeada para as URL's:
+		- /faces/*
+		- *.faces
+		- *.jsf -->
+	<!-- No JSF 2.0 o arquivo faces-config.xml se tornou opcional, ou seja, caso a Faces Servlet esteja explicitamente mapeada
+		no web.xml, o arquivo faces-config.xml nao é mais necessário. -->
+	<servlet>
+		<servlet-name>Faces Servlet</servlet-name>
+		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>*.jsf</url-pattern>
+	</servlet-mapping>
+
+	<listener>
+		<listener-class>org.jboss.weld.environment.servlet.Listener</listener-class>
+	</listener>
+
+	<context-param>
+		<param-name>javax.faces.FACELETS_SKIP_COMMENTS</param-name>
+		<param-value>true</param-value>
+	</context-param>
+
+	<!-- O JSF 2.0 introduziu o parametro de inicializacao de aplicacao PROJECT_STAGE que permite um maior nivel de informacao de depuracao da aplicacao. Os valores 
+		disponiveis sao Development, UnitTest, SystemTest e Production. -->
+	<context-param>
+		<param-name>javax.faces.PROJECT_STAGE</param-name>
+		<param-value>Development</param-value>
+	</context-param>
+</web-app>

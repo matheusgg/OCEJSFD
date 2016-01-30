@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+	<title>Default Validators</title>
+</h:head>
+<h:body>
+	<h:messages />
+
+	<!-- 
+		O JSF possui os seguintes validadores padroes:
+		- javax.faces.Length
+		- javax.faces.DoubleRange
+		- javax.faces.LongRange
+		- javax.faces.Required
+		- javax.faces.RegularExpression
+		- javax.faces.Bean 
+	-->
+	<!-- É possivel desabilitar qualquer validador atraves do atributo disabled -->
+
+	<h:form>
+		<h:panelGrid>
+			<h:panelGroup>
+				<h3>ValidadeLength</h3>
+				<h:inputText>
+					<f:validateLength minimum="5" maximum="10" />
+				</h:inputText>
+			</h:panelGroup>
+
+			<h:panelGroup>
+				<h3>ValidadeDoubleRange</h3>
+				<h:inputText>
+					<f:validateDoubleRange minimum="0.5" maximum="10.5" />
+				</h:inputText>
+			</h:panelGroup>
+
+			<h:panelGroup>
+				<h3>ValidadeLongRange</h3>
+				<h:inputText>
+					<f:validateLongRange minimum="5" maximum="100" />
+				</h:inputText>
+			</h:panelGroup>
+
+			<h:panelGroup>
+				<h3>ValidadeRequired</h3>
+
+				<!-- O validador required possui tres variacoes. Atraves da tag f:validateRequired, atraves do atributo validator e 
+					 atraves do atributo required. -->
+				<!-- A tag f:validateRequired tem preferencia sobre os atributos validator e required. -->
+				<!-- A tag f:validatorRequired apenas define como true o atributo required. -->
+				<h:inputText size="5" required="false" label="Dia">
+					<f:validateRequired />
+				</h:inputText>
+				/
+				
+				<!-- O atributo validator possui preferencia sobre o atributo required. -->
+				<h:inputText validator="javax.faces.Required" size="5" required="false" label="Mês" />
+				/
+				
+				<h:inputText required="true" size="10" label="Ano" />
+				-
+				
+				<!-- Quando o atributo required é definido como true e o atributo requiredMessage está presente, esta mensagem será utilizada caso
+					haja algum erro de validacao de campo obrigatorio. Caso o atributo required seja true e um requiredMessage nao estiver presente,
+					uma mensagem de validacao padrao sera exibida. A mensagem definida em validatorMessage é utilizada somente se algum validator for 
+					especificado atraves do atibuto validator ou da tag f:validate... -->
+				<!-- No exemplo abaixo, caso haja um erro de validacao de valor obrigatório, a mensagem especificada em validatorMessage nao sera
+					utilizada. -->
+				<h:inputText required="true" validatorMessage="Por favor, preencha o campo de hora." size="10" />
+			</h:panelGroup>
+
+
+			<h:panelGroup>
+				<h3>ValidadeRegex</h3>
+				<h:inputText>
+					<f:validateRegex pattern="[0-9]+" />
+				</h:inputText>
+			</h:panelGroup>
+
+			<h:panelGroup>
+				<h3>Validator</h3>
+				<h:inputText>
+					<!-- A tag f:validator permite anexar um validador a um componente atraves do ID deste validador. -->
+					<!-- Os atributos do validador informado podem ser definidos atraves do componente f:attribute. -->
+					<f:validator validatorId="javax.faces.Length">
+						<f:attribute name="minimum" value="10" />
+					</f:validator>
+				</h:inputText>
+			</h:panelGroup>
+
+			<h:panelGroup>
+				<h:commandButton value="OK" />
+
+				<!-- Com o atributo immediate definido como true, os metodos definidos em action e actionListener sao executados no final
+				 da face Apply Request Values, ou seja, antes do processo de conversao e validacao, deste modo, é possivel realizar um 
+				 redirecionamento retornando uma String outcome para o handler de navegacao. -->
+				<h:commandButton value="Cancelar" action="/index?faces-redirect=true" immediate="true" />
+			</h:panelGroup>
+		</h:panelGrid>
+	</h:form>
+</h:body>
+</html>

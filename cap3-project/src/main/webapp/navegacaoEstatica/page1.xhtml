@@ -1,0 +1,21 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<title>Page 1</title>
+</h:head>
+<h:body>
+	<h1>Page 1</h1>
+	<h:form>
+		<!-- A visualizacao representada pelo outcome informado sera resolvida da seguinte forma:
+			 - Caso o outcome informado nao possua extensao, a extensao da visualizacao atual é utilizada;
+			 - Caso o outcome informado nao inicie com /, o caminho da visualizacao atual será utilizado.
+			 Todos os exemplos abaixo produzem o mesmo resultado.
+		-->
+		<h:commandButton action="page2" value="Go to Page 2" />
+		<h:commandButton action="page2.xhtml" value="Go to Page 2" />
+		<h:commandButton action="/navegacaoEstatica/page2" value="Go to Page 2" />
+		<h:commandButton action="/navegacaoEstatica/page2.xhtml" value="Go to Page 2" />
+	</h:form>
+</h:body>
+</html>

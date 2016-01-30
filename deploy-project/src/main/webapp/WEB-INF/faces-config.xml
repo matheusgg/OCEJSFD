@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- O atributo metadata-complete="true" informa para a implementacao do JSF ignorar qualquer configuracao por annotation. Ou seja, o JSF nao ira escanear classes 
+	anotadas com @ManagedBean, @FacesConverter, @FacesValidator, etc. O JSF tambem nao procurara por classes anotadas nos jars do classpath que possuem um arquivo faces-config.xml 
+	dentro da pasta /META-INF. Resumindo, apenas as configuracoes deste xml, e dos xml dos jars do classpath serao processadas. Porem os beans CDI ainda serao considerados, 
+	uma vez que é o container CDI que se encarrega de cria-los e nao o JSF. -->
+
+<!-- O JSF verificara o valor do atributo metadata-complete apenas nos xml's localizados em /WEB-INF/faces-config.xml e /META-INF/faces-config.xml. Caso arquivos 
+	de configuracao sejam especificados atraves do parametro de inicializacao javax.faces.CONFIG_FILES, o atributo metadata-complete desses arquivos sera ignorado. -->
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd" version="2.0" metadata-complete="false">
+
+	<name>deploy-project</name>
+
+	<!-- O elemento absolute-ordering serve para especificar a ordem de carregamento dos arquivos de configuracao contidos nos jars do classpath. O JSF leva em consideracao 
+		a informacao de absolute-ordering apenas do arquivo de configuracao principal, ou seja, o arquivo faces-config.xml contido em /WEB-INF. O elemento others é obrigatorio. -->
+	<!-- Caso algum arquivo de configuracao especificado no parametro javax.faces.CONFIG_FILES declare o elemento absolute-ordering, este por sua vez sera ignorado 
+		pelo JSF. -->
+	<!-- O elemento absolute-ordering, caso especificado no arquivo principal, tem precedencia sobre o elemento ordering especificado nos arquivos de configuracao dos 
+		jars do classpath. -->
+	<!-- <absolute-ordering> -->
+	<!-- <name>deploy-project3</name> -->
+	<!-- <name>deploy-project2</name> -->
+	<!-- <others /> -->
+	<!-- </absolute-ordering> -->
+
+	<!-- O elemento ordering nao tem efeito no arquivo de configuracao principal e nem nos arquivos de configuracao especificados em javax.faces.CONFIG_FILES. -->
+	<!-- <ordering></ordering> -->
+
+	<application>
+		<system-event-listener>
+			<system-event-listener-class>listeners.ApplicationEventListener</system-event-listener-class>
+			<system-event-class>javax.faces.event.PostConstructApplicationEvent</system-event-class>
+		</system-event-listener>
+	</application>
+
+</faces-config>

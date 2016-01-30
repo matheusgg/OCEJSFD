@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:cft="http://customFaceletsTags.com.br">
+
+<h:head>
+	<title>Facelets Tags</title>
+</h:head>
+<h:body>
+	<h:form id="form">
+		<h:messages />
+
+		<h:panelGrid>
+			<!-- Com as tags Facelets é possivel criar "componentes" personalizados utilizando o framework de templates Facelets.
+				Diferentemente das composite tags, as tags Facelets possuem algumas limitacoes que as tornam inadequadas
+				quando se deseja um comportamento mais robusto e complexo. -->
+
+			<!-- Na verdade, as tags Facelets nao sao componentes em si, elas simplesmente encapsulam outros componentes que sao inseridos 
+				no ponto em que a tag Facelet é utilizada. -->
+
+			<!-- Os atributos especificados na tag Facelet sao passados para os componentes encapsulados pela tag. -->
+			<cft:customLink link="http://www.google.com.br" text="Go to " id="link" teste="valor">Google</cft:customLink>
+
+			<!-- Como as tags Facelets utilizam a engine de template Facelets para renderizacao, é possível utilizar todos os recursos
+				de template, como por exemplo, pontos de insercao e definicao de conteudos dinamicos (ui:insert, ui:define, etc.). -->
+			<cft:customInputText value="#{faceletsMB.number}" rendered="true">
+				<f:convertNumber type="number" />
+			</cft:customInputText>
+
+			<h:commandButton value="OK" />
+		</h:panelGrid>
+	</h:form>
+
+	<h3>#{faceletsMB.number}</h3>
+</h:body>
+</html>

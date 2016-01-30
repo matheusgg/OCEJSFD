@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+	<title>MessageBundle</title>
+</h:head>
+<h:body>
+	<h:form>
+		<h:panelGrid>
+			<h:panelGroup>
+				<h3>Substituindo mensagens de conversao padrao com um message-bundle</h3>
+				<h:inputText converter="javax.faces.Integer" label="Idade" id="idade" />
+				<h:message for="idade" tooltip="true" showSummary="true" />
+			</h:panelGroup>
+
+			<h:panelGroup>
+				<h3>Substituindo mensagens de conversao padrao com o atributo converterMessage</h3>
+				<!-- A String especificada em converterMessage nao deve conter placeholders, pois os mesmo nao serao substituidos. -->
+				<h:inputText converter="javax.faces.Integer" label="Ano de Nascimento" id="anoNascimento"
+					converterMessage="O ano de nascimento informado é inválido!" />
+				<h:message for="anoNascimento" tooltip="true" showSummary="true" />
+			</h:panelGroup>
+
+			<h:commandButton value="OK" />
+		</h:panelGrid>
+	</h:form>
+</h:body>
+</html>

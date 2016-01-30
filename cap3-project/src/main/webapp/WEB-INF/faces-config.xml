@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd" version="2.0">
+
+	<!-- É possível realizar o mapeamento explicito entre outcomes e views. Basta informar as regras de navegacao (navigation-rule) -->
+	<navigation-rule>
+
+		<!-- Todo ID de visualizacao deve ser informado por completo, ou seja, deve iniciar com / e possuir a extensao do arquivo, não do mapeamento da URL, ou seja, apesar 
+			da FacesServlet estar mapeada para tratar as requisicoes que possuirem a extensao *.jsf, é a extensao do arquivo fisico que deve ser informada, neste caso, xhtml. -->
+		<from-view-id>/navegacaoPorXML/page1.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>page2</from-outcome>
+
+			<!-- ID completo da visualizacao, comecando com / e possuindo a extensao fisica do arquivo xhtml -->
+			<to-view-id>/navegacaoPorXML/page2.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<!-- Regra de navegacao global. Em qualquer lugar da aplicacao, se algum botao ou link retornar o outcome logout, o handler de navegacao exibirá a pagina page3.xhtml -->
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>logout</from-outcome>
+			<to-view-id>/navegacaoPorXML/page3.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<!-- Regra de navegacao com varios casos de navegacao para o mesmo view id. -->
+	<navigation-rule>
+		<from-view-id>/navegacaoPorXML/page1.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>sucesso</from-outcome>
+			<to-view-id>/navegacaoPorXML/page2.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>falha</from-outcome>
+			<to-view-id>/navegacaoPorXML/page3.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/redirecionamento/page1.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>testRedirect</from-outcome>
+			<to-view-id>/redirecionamento/page2.xhtml</to-view-id>
+			<!-- Para realizar um redirect utilizando regras de navegacao, basta informar o elemento redirect -->
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<!-- Parametros de visualizacao na configuracao por regras de navegacao XML -->
+	<navigation-rule>
+		<from-view-id>/bookmarkability/page1.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>teste1</from-outcome>
+			<to-view-id>/bookmarkability/page2.xhtml</to-view-id>
+			<redirect include-view-params="true" />
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>teste2</from-outcome>
+			<to-view-id>/bookmarkability/page2.xhtml</to-view-id>
+			<redirect include-view-params="true">
+				<view-param>
+					<name>teste</name>
+					<value>1000</value>
+				</view-param>
+			</redirect>
+		</navigation-case>
+	</navigation-rule>
+
+	<!-- O uso do caractere coringa deve estar sempre no final da String ID. -->
+	<navigation-rule>
+		<from-view-id>/navegacaoPorXML/*</from-view-id>
+		<!-- Os exemplos abaixo possuem o mesmo efeito da omissao do elemento from-view-id -->
+		<!-- <from-view-id>/*</from-view-id> -->
+		<!-- <from-view-id>*</from-view-id> -->
+		<navigation-case>
+			<from-outcome>avancada1</from-outcome>
+			<to-view-id>/navegacaoPorXML/navegacaoAvancada2.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<!-- Esta regra de navegacao coincide com a anterior, pois possui um case com o mesmo outcome, quando isso ocorre, a regra mais longa é utilizada, neste caso, 
+			esta regra terá preferencia sobre a anterior, pois é mais especifica. -->
+		<from-view-id>/navegacaoPorXML/teste/*</from-view-id>
+		<navigation-case>
+			<from-outcome>avancada1</from-outcome>
+			<to-view-id>/navegacaoPorXML/navegacaoAvancada1.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<!-- Quando duas acoes diferentes possuem o mesmo outcome, é possivel utilizar o elemento from-action ou inves de from-outcome. Deste modo, deve-se especificar 
+		uma expressao de metodo igual a informada no componente alvo. É importante ressaltar que esta expressao nao sera avaliada, ou seja, o metodo nao sera invocado, esta 
+		expressao é utilizada pelo handler de navegacao apenas para auxilia-lo a definir o caso de navegacao. Sendo assim, o retorno deste método pouco importa. -->
+	<navigation-rule>
+		<from-view-id>/navegacaoPorXML/*</from-view-id>
+		<navigation-case>
+			<from-action>#{navegacaoMB.testAction1()}</from-action>
+			<to-view-id>/navegacaoPorXML/page1.xhtml</to-view-id>
+		</navigation-case>
+
+		<navigation-case>
+			<from-action>#{navegacaoMB.testAction2()}</from-action>
+			<to-view-id>/navegacaoPorXML/page2.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/navegacaoPorXML/*</from-view-id>
+		<navigation-case>
+			<from-outcome>testCondition</from-outcome>
+
+			<!-- O elemento if serve para indicar um teste condicional que ativara, ou nao, este caso de navegacao. Caso a expressao resulte em true, o caso será processado. 
+				Para links e buttons que utilizarem o outcome ou action deste caso, a avaliacao ocorrera antes da pagina ser renderizada (na fase RENDER-RESPONSE). Para commands, 
+				a avaliacao acontecera apenas se o usuario clicar no botao ou link (INVOKE-APPLICATION). -->
+			<!-- <if>#{!empty requestScope.activate}</if> -->
+			<if>#{navegacaoMB.teste()}</if>
+
+			<to-view-id>/navegacaoPorXML/page1.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+</faces-config>

@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+	<title>Bean Validation</title>
+</h:head>
+<h:body>
+	<h:messages />
+
+	<h:form>
+		<h:panelGrid>
+			<h:panelGroup>
+				<h3>ValidadeBean</h3>
+				<!-- A mensagem especificada em validatorMessage sempre possui preferencia sobre as mensagens de validacao padrao. -->
+				<h:inputText value="#{beanValidationMB.name}" validatorMessage="O valor nao pode ser nulo!">
+					<f:validateBean validationGroups="java.io.Serializable" />
+				</h:inputText>
+			</h:panelGroup>
+
+			<h:panelGroup>
+				<h3>ValidadeBean</h3>
+				<h:inputText value="#{beanValidationMB.idade}">
+					<!-- Quando a validacao de Bean do JSF é utilizada, a mensagem de validacao padrao é recuperada do arquivo de mensagens
+						 padrao do JSF ou um message-bundle customizado. A chave utilizada é javax.faces.validator.BeanValidator.MESSAGE. -->
+					<f:validateBean />
+				</h:inputText>
+			</h:panelGroup>
+
+			<!-- 
+				No JSF quando um campo é anotado com alguma anotacao da especificacao de BeanValidation, o JSF utiliza o validador padrao de Bean
+				para realizar a validacao do campo. Caso seja especificada uma chave na mensagem da anotacao do campo ao inves de uma mensagem 
+				(ou seja, uma String delimitada por {}), esta chave sera utilizada para recuperar a mensagem relacionada no arquivo de mensagens
+				padrao da especificacao de BeanValidation (ValidationMessages.properties). Caso a chave seja encontrada, a mensagem relacionada
+				é recuperada e passada para preencher o placeholder da mensagem associada a chave javax.faces.validator.BeanValidator.MESSAGE
+				do arquivo de mensagens padrao do JSF ou um message-bundle customizado que tenha sobrescrito esta mensagem.
+			-->
+			<h:panelGroup>
+				<h3>ValidadeBean</h3>
+				<h:inputText value="#{beanValidationMB.endereco}" />
+			</h:panelGroup>
+
+			<h:panelGroup>
+				<h3>Custom Bean Validation</h3>
+				<h:inputText value="#{beanValidationMB.valor}" />
+			</h:panelGroup>
+
+			<h:commandButton value="OK" />
+		</h:panelGrid>
+	</h:form>
+</h:body>
+</html>

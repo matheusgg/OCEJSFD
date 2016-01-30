@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Se o atributo metadata-complete deste jar estiver com o valor true e este jar for incluido no classpath de alguma aplicacao JSF que possua um arquivo faces-config.xml 
+	com o atributo metadata-complete marcado como false, mesmo assim, este xml de configuracao sera considerado e as classes anotadas deste jar nao serao escaneadas. -->
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd" version="2.0" metadata-complete="false">
+
+	<name>deploy-project2</name>
+
+	<!-- Essa configuracao sera ignorada, pois este arquivo esta dentro de um jar no classpath da aplicacao deploy-project, e apenas o arquivo de configuracao principal 
+		(/WEB-INF/faces-config.xml) é considerado. -->
+	<absolute-ordering>
+		<name>deploy-project</name>
+		<name>deploy-project3</name>
+		<name>deploy-project2</name>
+	</absolute-ordering>
+
+	<!-- Caso uma ordem ambigua (exemplo abaixo) seja especificada, uma excecao sera lancada no deploy da aplicacao. -->
+	<!-- <ordering> -->
+	<!-- <after> -->
+	<!-- <name>deploy-project3</name> -->
+	<!-- </after> -->
+	<!-- <before> -->
+	<!-- <name>deploy-project3</name> -->
+	<!-- </before> -->
+	<!-- </ordering> -->
+	<ordering>
+		<after>
+			<name>deploy-project3</name>
+		</after>
+	</ordering>
+
+	<!-- <converter> -->
+	<!-- <converter-id>Deploy2CustomConveter</converter-id> -->
+	<!-- <converter-class>view.converter.Deploy2CustomConveter</converter-class> -->
+	<!-- </converter> -->
+
+	<application>
+		<system-event-listener>
+			<system-event-listener-class>listeners.ApplicationEventListener1</system-event-listener-class>
+			<system-event-class>javax.faces.event.PostConstructApplicationEvent</system-event-class>
+		</system-event-listener>
+	</application>
+
+</faces-config>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd" version="2.0">
+
+	<application>
+		<!-- Diferente do resource-bundle que armazena as mensagens em um mapa que pode ser utilizado nas paginas. Um message bundle é utilizado pela aplicacao para recuperacao 
+			de mensagens. -->
+		<message-bundle>messages.customMessages</message-bundle>
+	</application>
+
+	<!-- É possivel especificar conversores atraves do XML. A configuracao XML sempre tem precendencia sobre a configuracao por anotacao. Como o elemento converter-id 
+		foi especificado, converter-for-class sera ignorado. O elemento converter-class é obrigatório, caso ele nao seja especificado, o conversor nao sera registrado. -->
+	<converter>
+		<converter-id>customconverter.CreditCardConverter</converter-id>
+		<converter-for-class>model.CreditCard</converter-for-class>
+		<converter-class>customconverter.CreditCardConverter</converter-class>
+	</converter>
+
+	<converter>
+		<converter-id>customconverter.CreditCardConverter2</converter-id>
+		<converter-class>customconverter.CreditCardConverter</converter-class>
+	</converter>
+
+	<!-- É possível especificar validadores customizados através do faces-config informando o ID do validador e a classe do mesmo. -->
+	<validator>
+		<validator-id>customvalidator.LengthValidator2</validator-id>
+		<validator-class>customvalidator.LengthValidator</validator-class>
+	</validator>
+
+	<!-- O elemento default-validators serve para especificar validadores padroes que serao registrados em todos os componente e que serao chamados no momento da validacao. 
+		Na configuracao por anotacao, este comportamento é especificado atraves do atributo isDefault = true. -->
+	<!-- <application> -->
+	<!-- <default-validators> -->
+	<!-- <validator-id>customvalidator.LengthValidator</validator-id> -->
+	<!-- </default-validators> -->
+	<!-- </application> -->
+
+</faces-config>

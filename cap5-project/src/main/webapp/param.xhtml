@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+	<title>Param</title>
+</h:head>
+<h:body>
+
+	<ui:decorate template="/WEB-INF/decorate/customDecorator.xhtml">
+		<!-- A tag ui:param serve para passar parametros para compositions, decorators e includes. -->
+		<ui:param name="sectionTitle" value="Parametro de Teste 1" />
+
+		<ui:define name="content">
+			<!-- A tag ui:param nao terá efeito caso seja especificada dentro de um define -->
+			<!-- <ui:param name="sectionTitle" value="Parametro de Teste" /> -->
+
+			<h1>Teste ui:param</h1>
+
+			<h3>#{view.viewMap}</h3>
+		</ui:define>
+
+		<!-- Caso o mesmo parametro seja passado para um ui:composition mais de uma vez, apenas o último
+		é considerado. -->
+		<ui:param name="sectionTitle" value="Parametro de Teste 2" />
+	</ui:decorate>
+
+	<ui:include src="/WEB-INF/template/footer.xhtml">
+		<!-- A tag ui:param serve para passar parametros para compositions, decorators e includes. -->
+		<ui:param name="footerText" value="Teste 1" />
+		
+		<!-- Caso o mesmo parametro seja passado para um ui:composition mais de uma vez, apenas o último
+		é considerado. -->
+		<ui:param name="footerText" value="Teste 2" />
+	</ui:include>
+
+</h:body>
+</html>

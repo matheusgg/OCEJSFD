@@ -1,0 +1,13 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" template="/WEB-INF/template/template2.xhtml">
+	<ui:param name="customParam" value="Parametro de Teste 1" />
+
+	<ui:define name="title">Page1</ui:define>
+
+	<h1>Page 1</h1>
+
+	<!-- A tag ui:param serve para passar parametros para compositions, decorators e includes. -->
+	<!-- Caso o mesmo parametro seja passado para um ui:composition mais de uma vez, apenas o último
+		é considerado. -->
+	<ui:param name="customParam" value="Parametro de Teste 2" />
+</ui:composition>

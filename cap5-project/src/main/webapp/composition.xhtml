@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+	<title>Facelets</title>
+</h:head>
+<h:body>
+
+	<!-- O componente ui:composition, quando utilizado, ignora todo o conteudo fora dele. Ou seja,
+		o title html, head, tile, etc., acima nao serao renderizados. -->
+	<ui:composition template="/WEB-INF/template/template.xhtml">
+
+		<!-- Apesar de no template, o ponto de insercao footer ter sido definido depois do ponto de insercao content,
+			é possível definir o conteúdo de footer antes de content, ou seja, a ordem de definicao pouco importa, pois
+			ui:define serve apenas para definir o conteudo que sera inserido, e nao a posicao de insercao. -->
+		<ui:define name="footer">Teste de Rodape</ui:define>
+
+		<!-- O Componente ui:define serve para indicar uma parte variavel que sera inserida em um ponto de 
+			um template. -->
+		<ui:define name="content">
+			Teste
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+</html>

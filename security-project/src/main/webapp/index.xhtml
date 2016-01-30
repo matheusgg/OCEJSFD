@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<title>Security Project</title>
+</h:head>
+<h:body>
+	<h1>Security Project</h1>
+	<h:button outcome="login" value="Go To Login Page" />
+	<h:button outcome="/protected/page1" value="Go To Page 1" />
+	<h:button outcome="/protected/admin/page2" value="Go To Page 2" />
+	<h:form>
+		<h3>Usuario logado? #{!empty request.authType}</h3>
+		<h:commandButton action="#{request.logout()}" value="Logout" />
+	</h:form>
+</h:body>
+</html>

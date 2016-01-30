@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:util="http://java.sun.com/jsf/composite/util">
+<f:view locale="pt_BR">
+	<h:head>
+		<title>Composite Components</title>
+	</h:head>
+	<h:body>
+		<h:messages />
+
+		<h1>Composite Component - BackingComponents</h1>
+		<h3>#{testCompositeComponentsMB.localDate}</h3>
+		<h:form>
+			<h:panelGrid>
+				<util:date value="#{testCompositeComponentsMB.localDate}" />
+				<h:commandButton value="OK" />
+			</h:panelGrid>
+		</h:form>
+		<hr />
+
+		<h1>Composite Component - InsertChildren</h1>
+		<util:panel>
+			<h3>Titulo da Painel</h3>
+			<h:outputText value="Mensagem" />
+		</util:panel>
+		<hr />
+
+		<h1>Composite Component - Facets</h1>
+		<util:userDefinedMessage message="Mensagem de Teste" title="Titulo" id="udm">
+			<f:facet name="header">
+				<h:outputText value="Cabecalho" />
+			</f:facet>
+
+			<f:facet name="footer">
+				<h:outputText value="Rodape" />
+			</f:facet>
+		</util:userDefinedMessage>
+		<hr />
+
+		<h1>Composite Component - ValueHolder, EditableValueHolder, ActionSource</h1>
+		<util:login passwordValue="#{testCompositeComponentsMB.pass}" usernameValue="#{testCompositeComponentsMB.user}"
+			action="#{testCompositeComponentsMB.test()}" actionBtnText="Login" usenameText="Usuário" passwordText="Senha" id="comp">
+
+			<!-- Atribuindo validadores para os componentes expostos deste composite component. O atributo for serve para referenciar
+				 os componentes expostos. -->
+			<f:validateRequired for="usernameInput" />
+			<f:validateLength minimum="5" for="usernameInput" />
+
+			<f:validateRequired for="mainForm:pass" />
+
+			<f:actionListener for="actionBtn" type="compositecomponents.CustomActionListener" />
+		</util:login>
+		<hr />
+
+		<h1>Composite Component - ResourceBundleMap</h1>
+		<util:advertisement />
+		<hr />
+
+		<h1>Composite Component - Atributos nao devem ser especificados com cc:attribute</h1>
+		<util:submitButton action="#{testCompositeComponentsMB.test()}" value="Submit Button" id="submitButtonCC" />
+		<hr />
+
+		<h1>Composite Component - Basics</h1>
+		<util:requestDebug showRequestParams="#{!empty param}" />
+		<hr />
+
+		<ui:debug />
+	</h:body>
+</f:view>
+</html>
